@@ -1,7 +1,7 @@
 var pg = require('pg');
 var fs = require('fs');
 
-var connectionString = "postgres://ompghsnxlbxgmh:ejH5TfPj0KZgvWS1S_1Pceg2F2@ec2-54-235-155-182.compute-1.amazonaws.com:5432/d6fnutu4e6n5cl";
+var connectionString = "";
 
 fs.readFile('./WebService/DataAccess/Seed.sql', function(err, data) {
     if (err) {

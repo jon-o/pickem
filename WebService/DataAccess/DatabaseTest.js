@@ -1,6 +1,7 @@
-var db = require('../Database.js');
+var db = require('./Database.js');
 
-var query = db.executeQuery('SELECT * FROM games');
+// var query = db.executeQuery('SELECT * FROM games WHERE Id = 1 OR Id = 2');
+var query = db.executeQuery('SELECT * FROM games WHERE Id = $1 OR Id = $2', [1, 2]);
 
 query.on('err', function(err) {
     console.log('ERROR: ');

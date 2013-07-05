@@ -1,7 +1,6 @@
+var config = require('../Config.js');
 var pg = require('pg');
 var fs = require('fs');
-
-var connectionString = "";
 
 fs.readFile('./WebService/DataAccess/Seed.sql', function(err, data) {
     if (err) {
@@ -9,7 +8,7 @@ fs.readFile('./WebService/DataAccess/Seed.sql', function(err, data) {
     } else {
         var query = data.toString();
        
-        pg.connect(connectionString, function(err, client, done) {
+        pg.connect(config.databaseConnectionString, function(err, client, done) {
             if (err) {
                 console.log('ERROR CONNECTING:');
                 console.log(err);

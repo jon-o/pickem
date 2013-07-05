@@ -1,0 +1,1 @@
+exports.databaseConnectionString = "postgres://jwbchchedjqgvu:ZAdtWFvnK8VM6heSWU4djaNXpO@ec2-23-23-95-222.compute-1.amazonaws.com:5432/d14gpqgeknsc6l";

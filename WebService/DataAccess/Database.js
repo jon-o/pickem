@@ -1,14 +1,13 @@
+var config = require('../Config.js');
 var pg = require('pg');
 var EventEmitter = require("events").EventEmitter;
-
-var connectionString = "";
 
 exports.executeQuery = function(userQuery, params) {
     var eventEmitter = new EventEmitter();
     
     eventEmitter.emit('Start');
     
-    pg.connect(connectionString, function(err, client, done) {
+    pg.connect(config.databaseConnectionString, function(err, client, done) {
          if (err) {
              eventEmitter.emit('error', err);
          } else {

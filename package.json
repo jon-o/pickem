@@ -1,6 +1,17 @@
 {
   "name": "pickem",
   "version": "0.0.1",
+  "author" : "jon-o",
+  "description": "Pickem for Facebook",
+  "contributors": [ 
+    {
+      "name": "jason-d",
+    } 
+  ],
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/jon-o/pickem.git"
+  },
   "dependencies": {
     "express": ">=3.0",
     "pg": "2.0.0"

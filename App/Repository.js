@@ -2,7 +2,7 @@ var db = require('./DataAccess/Database.js');
 var EventEmitter = require("events").EventEmitter;
 
 
-exports.findGames = function () {    
+exports.retrievePicksFor = function () {    
     var eventEmitter = new EventEmitter();
     
     eventEmitter.emit('Start');

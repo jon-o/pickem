@@ -1,7 +1,7 @@
 var repository = require("./Repository.js");
 
 exports.findPicksForRound = function (req, res) {
-    var games = repository.findGames();
+    var games = repository.retrievePicksFor();
     
     games.on('error', function(err) {
         console.log('ERROR:');

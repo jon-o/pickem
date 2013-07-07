@@ -11,6 +11,7 @@ query.on('error', function(err) {
 query.on('row', function(row) {
     console.log('DATA!!!!');
     console.log(row);
+    console.log(JSON.stringify(new Date(row.dateandtime)));
 });
 
 query.on('end', function(result) {

@@ -40,10 +40,10 @@ CREATE TABLE games (
 --
 
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-16 15:00:00 +00:00', 1, 2, 'DRAW', 1, '1 - 1');
-INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-23 18:00:00 +00:00', 3, 4, NULL, 2, NULL);
+INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-23 18:00:00 +00:00', 3, 4, 'AWAY', 2, '4 - 0');
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-23 13:30:00 +00:00', 5, 6, 'HOME', 2, '2 - 3');
-INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-16 15:00:00 +00:00', 3, 6, NULL, 1, NULL);
-INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-23 15:00:00 +00:00', 1, 2, NULL, 5, NULL);
+INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-16 15:00:00 +00:00', 3, 6, 'HOME', 1, '1 - 3');
+INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-23 15:00:00 +00:00', 1, 2, 'DRAW', 5, '0 - 0');
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-23 18:00:00 +00:00', 3, 4, NULL, 5, NULL);
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-23 13:30:00 +00:00', 5, 6, NULL, 5, NULL);
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-24 15:00:00 +00:00', 7, 8, NULL, 5, NULL);

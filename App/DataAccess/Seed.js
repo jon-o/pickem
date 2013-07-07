@@ -2,7 +2,7 @@ var config = require('../Config.js');
 var pg = require('pg');
 var fs = require('fs');
 
-fs.readFile('./WebService/DataAccess/Seed.sql', function(err, data) {
+fs.readFile('./App/DataAccess/Seed.sql', function(err, data) {
     if (err) {
         console.log(err);
     } else {

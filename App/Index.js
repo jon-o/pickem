@@ -1,7 +1,7 @@
 var express = require("express");
 var path = require("path");
 //var games = require("./Routes/Games.js");
-//var controller = require("./Controller.js");
+var controller = require("./Controller.js");
 
 var app = express();
 

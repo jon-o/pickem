@@ -1,1 +1,1 @@
-exports.databaseConnectionString = "postgres://ajtsvfaeqjuxqf:B4J39BsTnLvhuTRrplnL1VsJn6@ec2-107-20-201-165.compute-1.amazonaws.com:5432/dd3g4b9ogbedbp";
+//**

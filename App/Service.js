@@ -25,7 +25,7 @@ exports.retrievePicksFor = function (criteria) {
 'LEFT JOIN Picks p ON g.Id = p.GameId AND p.UserId = u.Id ' +
 'WHERE g.RoundId = ( ' +
 '    SELECT id ' +
-'	FROM Rounds ' +
+'    FROM Rounds ' +
 '	WHERE Round = $2 ' +
 '	AND SeasonId = $3) ' +
 'ORDER BY dateandtime;', [criteria.uid, criteria.roundId, criteria.seasonId]);

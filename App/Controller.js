@@ -1,4 +1,4 @@
-var repository = require("./Repository.js");
+var service = require("./Service.js");
 
 exports.findPicksForRound = function (req, res) {        
     var criteria = {
@@ -7,7 +7,7 @@ exports.findPicksForRound = function (req, res) {
       uid: 'test'
     };
     
-    var games = repository.retrievePicksFor(criteria);
+    var games = service.retrievePicksFor(criteria);
     
     games.on('error', function(err) {
         console.log('ERROR:');

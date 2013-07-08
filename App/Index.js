@@ -12,7 +12,8 @@ app.configure(function() {
 app.get('/', function(req, res) {
     res.redirect('/index.html');
 });
-//app.get('/api/picks/season/:seasonId/round/:roundId', controller.findPicksForRound);
+
+app.get('/api/picks/season/:seasonId/round/:roundId', controller.findPicksForRound);
 
 app.listen(process.env.PORT, process.env.IP);
 

@@ -3,6 +3,7 @@ var pg = require('pg');
 var EventEmitter = require("events").EventEmitter;
 
 exports.executeQuery = function(userQuery, params) {
+    console.log("TEST VALUE: " + config.check);
     var eventEmitter = new EventEmitter();
     
     eventEmitter.emit('Start');

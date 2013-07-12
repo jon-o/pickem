@@ -24,3 +24,27 @@ exports.findPicksForRound = function (req, res) {
         }    
     });
 };
+
+exports.savePick = function(req, res) {
+    var criteria = {
+        gameId: req.body.id,
+        pick: req.body.pick,
+        uid: 'test'
+    };
+    
+    var task = service.savePick(criteria);
+    
+    task.on('error', function(err) {
+        handleError(err, res);
+    });
+    
+    task.on('end', function(result) {
+       res.send(200);
+    });
+};
+
+function handleError(err, res) {
+    console.log("****ERROR****");
+    console.log(err);
+    res.send(500, "Oooops...something went wrong.");
+}

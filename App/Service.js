@@ -1,4 +1,5 @@
 var db = require('./DataAccess/Database.js');
+var util = require('util');
 var EventEmitter = require("events").EventEmitter;
 
 
@@ -40,3 +41,54 @@ exports.retrievePicksFor = function (criteria) {
     
     return eventEmitter;
 };
+
+exports.savePick = function(criteria) {
+    console.log(util.format('SavePick: UID: %s; GameId: %d; Pick: %s',
+        criteria.uid, criteria.gameId, criteria.pick));
+    
+    var eventEmitter = new EventEmitter();
+    
+    eventEmitter.emit('Start');
+    
+    var query = db.executeUpsert(util.format('%s%s%s%s',
+'UPDATE picks SET pick = $3',
+'WHERE userid = (SELECT id FROM users WHERE thirdpartyid = $1) AND gameid = $2;',
+'INSERT INTO picks (userid, gameid, pick) SELECT (SELECT id FROM users WHERE thirdpartyid = $1), $2, $3',
+'WHERE NOT EXISTS (SELECT 1 FROM picks WHERE userid = (SELECT id FROM users WHERE thirdpartyid = $1) AND gameid = $2);'),
+    [criteria.uid, criteria.gameId, criteria.pick]);
+
+    query.on('error', function(err) {        
+        eventEmitter.emit('error', err);
+    });
+    
+    query.on('end', function(result) {
+        eventEmitter.emit('end', result);        
+    });
+    
+    return eventEmitter;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

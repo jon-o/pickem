@@ -7,6 +7,7 @@ var app = express();
 
 app.configure(function() {
     app.use(express.static(path.join(__dirname, 'Public')));
+    app.use(express.bodyParser());
 });
 
 app.get('/', function(req, res) {
@@ -14,6 +15,8 @@ app.get('/', function(req, res) {
 });
 
 app.get('/api/picks/season/:seasonId/round/:roundId', controller.findPicksForRound);
+
+app.post('/api/picks/save', controller.savePick);
 
 app.listen(process.env.PORT, process.env.IP);
 

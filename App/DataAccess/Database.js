@@ -37,6 +37,42 @@ exports.executeQuery = function(userQuery, params) {
     return eventEmitter;
 };
 
+exports.executeUpsert = function(userQuery, params) {
+    var eventEmitter = new EventEmitter();
+    
+    eventEmitter.emit('Start');
+    
+    pg.connect(config.databaseConnectionString, function(err, client, done) {
+         if (err) {
+             eventEmitter.emit('error', err);
+             done(client);
+         } else {
+             var queryParts = userQuery.split(';');
+             var query = null;
+             
+             queryParts.forEach(function(queryPart) {
+                 if (queryPart.length > 0) {
+                    var queryText = queryPart + ';';
+                    query = client.query(queryText, params);
+                 }
+             });
+             
+             query.on('error', function(err) {
+                 eventEmitter.emit('error', err);
+                 done(client);
+             });
+             
+             query.on('end', function(result) {
+                eventEmitter.emit('end', result);
+             });
+             
+             done();
+         }
+    });
+    
+    return eventEmitter;
+};
+
 exports.executeQueries = function(userQueries) {
     var eventEmitter = new EventEmitter();
     

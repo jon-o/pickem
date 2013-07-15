@@ -16,7 +16,7 @@ app.get('/', function(req, res) {
 
 app.get('/api/picks/season/:seasonId/round/:roundId', controller.findPicksForRound);
 
-app.post('/api/picks/save', controller.savePick);
+app.post('/api/picks', controller.savePick);
 
 app.listen(process.env.PORT, process.env.IP);
 

@@ -50,7 +50,7 @@ exports.savePick = function(criteria) {
     
     eventEmitter.emit('Start');
     
-    var query = db.executeUpsert(util.format('%s%s%s%s',
+    var query = db.executeUpsert(util.format('%s %s %s %s',
 'UPDATE picks SET pick = $3',
 'WHERE userid = (SELECT id FROM users WHERE thirdpartyid = $1) AND gameid = $2;',
 'INSERT INTO picks (userid, gameid, pick) SELECT (SELECT id FROM users WHERE thirdpartyid = $1), $2, $3',
@@ -68,7 +68,29 @@ exports.savePick = function(criteria) {
     return eventEmitter;
 };
 
+exports.createUser = function(criteria) {
+    console.log(util.format('CreateUser: UID: %s; FacebookId: %d', 
+        criteria.uid, criteria.facebookId));
+    
+    var eventEmitter = new EventEmitter();
+    
+    eventEmitter.emit('start');
 
+    var query = db.executeQuery(util.format('%s %s',
+'INSERT INTO users (thirdpartyid, facebookid) SELECT $1, $2',
+'WHERE NOT EXISTS (SELECT 1 FROM users WHERE thirdpartyid = CAST($1 AS varchar(30)))'),
+    [criteria.uid, criteria.facebookId]);
+
+    query.on('error', function(err) {        
+        eventEmitter.emit('error', err);
+    });
+    
+    query.on('end', function(result) {
+        eventEmitter.emit('end', result);        
+    });
+    
+    return eventEmitter;
+};
 
 
 

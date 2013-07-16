@@ -10,9 +10,6 @@ exports.retrievePicksFor = function (criteria) {
     
     var eventEmitter = new EventEmitter();
     
-    
-    eventEmitter.emit('Start');
-    
     var query = db.executeQuery(
 'SELECT g.dateandtime AS DateAndTime, t1.name AS Home, t2.name AS Away, p.pick AS Pick, s.allowdraw AS AllowDraw, g.score as Score, g.id as Id ' +
 'FROM games g ' +
@@ -48,8 +45,6 @@ exports.savePick = function(criteria) {
     
     var eventEmitter = new EventEmitter();
     
-    eventEmitter.emit('Start');
-    
     var query = db.executeUpsert(util.format('%s %s %s %s',
 'UPDATE picks SET pick = $3',
 'WHERE userid = (SELECT id FROM users WHERE thirdpartyid = $1) AND gameid = $2;',
@@ -73,8 +68,6 @@ exports.createUser = function(criteria) {
         criteria.uid, criteria.facebookId));
     
     var eventEmitter = new EventEmitter();
-    
-    eventEmitter.emit('start');
 
     var query = db.executeQuery(util.format('%s %s',
 'INSERT INTO users (thirdpartyid, facebookid) SELECT $1, $2',

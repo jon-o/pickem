@@ -1,3 +1,8 @@
 .container-top-margin {
     margin-top: 60px;
 }
+
+/* CSS rule for using ng-cloak */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none;
+}

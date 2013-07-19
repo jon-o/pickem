@@ -10,7 +10,7 @@ exports.retrievePicksFor = function (criteria) {
     
     var eventEmitter = new EventEmitter();
     
-    var query = db.executeQuery(
+    var picksSql = 
 'SELECT g.dateandtime AS DateAndTime, t1.name AS Home, t2.name AS Away, p.pick AS Pick, s.allowdraw AS AllowDraw, g.score as Score, g.id as Id ' +
 'FROM games g ' +
 'JOIN teams t1 ON g.hometeamid = t1.id ' +
@@ -24,19 +24,64 @@ exports.retrievePicksFor = function (criteria) {
 'WHERE g.RoundId = ( ' +
 '    SELECT id ' +
 '    FROM Rounds ' +
-'	WHERE Round = $2 ' +
+'    WHERE Round = $2 ' +
 '	AND SeasonId = $3) ' +
-'ORDER BY dateandtime;', [criteria.uid, criteria.roundId, criteria.seasonId]);
+'ORDER BY dateandtime;'
     
-    query.on('error', function(err) {        
-        eventEmitter.emit('error', err);
+    var roundTextSql = 
+'SELECT Text AS Text ' +
+'FROM rounds ' +
+'WHERE SeasonId = $1 ' +
+'AND Round = $2';
+
+    var firstLastRoundsSql = 
+'SELECT MIN(Round) AS FirstRound, MAX(Round) AS LastRound ' +
+'FROM rounds ' +
+'WHERE SeasonId = $1';
+    
+    var parallelQuery = db.executeQueries([
+        { query: picksSql, params: [criteria.uid, criteria.roundId, criteria.seasonId], name: 'picks'},
+        { query: roundTextSql, params: [criteria.seasonId, criteria.roundId], name: 'roundText'},
+        { query: firstLastRoundsSql, params: [criteria.seasonId], name: 'firstLastRounds'}]);
+    
+    parallelQuery.on('error', function(err) {
+       eventEmitter.emit('error', err);
     });
     
-    query.on('end', function(result) {        
-        eventEmitter.emit('end', result.rows);        
-    });
+    parallelQuery.on('end', function(results) {
+        var response = { 
+            picks: results.picks.rows,
+            roundText: results.roundText.rowCount === 1 ? results.roundText.rows : "",            
+            roundData: getPicksNavigationUri(results.firstLastRounds.rows[0], criteria.seasonId, criteria.roundId)};            
+        
+        eventEmitter.emit('end', response);
+    });    
     
     return eventEmitter;
+};
+
+var getPicksNavigationUri = function (firstLastRounds, season, selectedRound) {
+    var selectedRoundInt = parseInt(selectedRound, 10);
+    var validSeasonId = firstLastRounds.firstRound !== null;
+    
+    var isValidFirstRound = (validSeasonId && selectedRoundInt !== parseInt(firstLastRounds.firstround, 10));
+    var isValidLastRound = (validSeasonId && selectedRoundInt !== parseInt(firstLastRounds.lastround, 10));    
+    
+    var uris = {
+        previousUri: isValidFirstRound ? 
+            buildPicksNavigationUri(season, selectedRoundInt - 1) : null,
+        nextUri: isValidLastRound ?
+            buildPicksNavigationUri(season, selectedRoundInt + 1) : null
+    };
+    
+    return uris;
+};
+
+var buildPicksNavigationUri = function (seasonId, round) {
+    var getPicksUri = util.format('/api/picks/season/%s/round/%s',
+        seasonId, round);
+        
+    return getPicksUri;
 };
 
 exports.savePick = function(criteria) {

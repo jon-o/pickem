@@ -8,12 +8,13 @@
     <link href="css/pickem.css" rel="stylesheet">
 </head>
 <body ng-cloak>
-<nav class="navbar navbar-fixed-top">
+<nav class="navbar navbar-fixed-top" bs-navbar>
     <div class="navbar-inner">
         <div class="container">
+            <a class="brand" href="#">Pick'em</a>
             <ul class="nav">
-                <li><span class="brand">Pick'em</span></li>
-                <li><a href="#/games">My Picks</a></li>
+                <li data-match-route="/games"><a href="#/games">My Picks</a></li>
+                <li data-match-route="/leaderboard"><a href="#/leaderboard">Leaderboard</a></li>
             </ul>
         </div>
     </div>
@@ -23,8 +24,10 @@
     <div ng-view></div>
 </div>
 
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.4/angular-strap.min.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/controllers/gamesController.js"></script>
 </body>

@@ -3,12 +3,53 @@ var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
 
-
-exports.retrievePicksFor = function (criteria) {    
-    console.log("seasonId: " + criteria.seasonId);
-    console.log("roundId: " + criteria.roundId);
-    console.log("uid: " + criteria.uid);
+exports.retrivePicksForCurrentRound = function (seasonId, uid) {
+    var eventEmitter = new EventEmitter();
     
+    var currentRoundSql = 
+'SELECT round as Round ' +
+'FROM rounds ' +
+'WHERE roundstartdate <= NOW() ' +
+'AND seasonid = $1 ' +
+'ORDER BY roundstartdate DESC ' +
+'LIMIT 1;';
+    
+    var query = db.executeQuery(currentRoundSql, [seasonId]);
+
+    query.on('error', function(err) {        
+        eventEmitter.emit('error', err);
+    });
+    
+    query.on('end', function(roundId) {
+        var criteria = {
+            seasonId: seasonId,
+            roundId: roundId.rows[0].round,
+            uid: uid
+        };
+        
+        console.log('GOT HERE');
+        console.log(util.format('season: %s, round: %s, uid: %s', 
+            criteria.seasonId, criteria.roundId, criteria.uid));
+        
+        var picks = getPicksFor(criteria);
+    
+        picks.on('error', function(err) {
+            eventEmitter.emit('error', err);
+        });
+        
+        picks.on('end', function(result) {
+            eventEmitter.emit('end', result);        
+        });                
+    });
+    
+    return eventEmitter;
+};
+
+exports.retrievePicksFor = function(criteria) {
+    return getPicksFor(criteria);
+};
+
+var getPicksFor = function (criteria) {        
     var eventEmitter = new EventEmitter();
     
     var picksSql = 

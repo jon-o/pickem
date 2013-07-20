@@ -25,6 +25,25 @@ exports.findPicksForRound = function (req, res) {
     });
 };
 
+exports.findPicksForCurrentRound = function (req, res) {                
+    var picks = service.retrivePicksForCurrentRound(req.params.seasonId, 'test');
+    
+    picks.on('error', function(err) {
+        console.log('ERROR:');
+        console.log(err); 
+    });
+    
+    picks.on('end', function(result) {
+        if (result) {
+            res.format({            
+                json: function() { res.send(result); }            
+            });
+        } else {
+            res.send(404, 'Not found');
+        }    
+    });
+};
+
 exports.savePick = function(req, res) {
     var criteria = {
         gameId: req.body.id,

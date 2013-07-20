@@ -23,6 +23,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/api/picks/season/:seasonId/round/:roundId', controller.findPicksForRound);
+app.get('/api/picks/season/:seasonId', controller.findPicksForCurrentRound);
 
 app.post('/api/picks', controller.savePick);
 

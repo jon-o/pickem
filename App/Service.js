@@ -38,11 +38,17 @@ exports.retrievePicksFor = function (criteria) {
 'SELECT MIN(Round) AS FirstRound, MAX(Round) AS LastRound ' +
 'FROM rounds ' +
 'WHERE SeasonId = $1';
+
+    var seasonNameSql = 
+'SELECT name AS Name ' +
+'FROM seasons ' +
+'WHERE id = $1';
     
     var parallelQuery = db.executeQueries([
         { query: picksSql, params: [criteria.uid, criteria.roundId, criteria.seasonId], name: 'picks'},
         { query: roundTextSql, params: [criteria.seasonId, criteria.roundId], name: 'roundText'},
-        { query: firstLastRoundsSql, params: [criteria.seasonId], name: 'firstLastRounds'}]);
+        { query: firstLastRoundsSql, params: [criteria.seasonId], name: 'firstLastRounds'},
+        { query: seasonNameSql, params: [criteria.seasonId], name: 'seasonName'}]);
     
     parallelQuery.on('error', function(err) {
        eventEmitter.emit('error', err);
@@ -50,9 +56,16 @@ exports.retrievePicksFor = function (criteria) {
     
     parallelQuery.on('end', function(results) {
         var response = { 
-            picks: results.picks.rows,
-            roundText: results.roundText.rowCount === 1 ? results.roundText.rows : "",            
-            roundData: getPicksNavigationUri(results.firstLastRounds.rows[0], criteria.seasonId, criteria.roundId)};            
+            round: {
+                games: results.picks.rows,
+                id: criteria.roundId,
+                text: results.roundText.rowCount === 1 ? results.roundText.rows[0].text : "",
+                navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], criteria.seasonId, criteria.roundId)
+            },
+            season : {
+                name: results.seasonName.rows[0].name
+            }
+        };
         
         eventEmitter.emit('end', response);
     });    

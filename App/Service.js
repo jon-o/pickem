@@ -1,6 +1,7 @@
 var db = require('./DataAccess/Database.js');
 var util = require('util');
-var EventEmitter = require("events").EventEmitter;
+var EventEmitter = require('events').EventEmitter;
+var _ = require('underscore');
 
 
 exports.retrievePicksFor = function (criteria) {    
@@ -57,7 +58,7 @@ exports.retrievePicksFor = function (criteria) {
     parallelQuery.on('end', function(results) {
         var response = { 
             round: {
-                games: results.picks.rows,
+                games: buildGamesCollection(results.picks.rows),
                 id: criteria.roundId,
                 text: results.roundText.rowCount === 1 ? results.roundText.rows[0].text : "",
                 navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], criteria.seasonId, criteria.roundId)
@@ -71,6 +72,27 @@ exports.retrievePicksFor = function (criteria) {
     });    
     
     return eventEmitter;
+};
+
+var buildGamesCollection = function (games) {
+    var currentDateTime = new Date();
+    
+    var gamesCollection = _.map(games, function(game) {
+        var gameDateTime = new Date(Date.parse(game.dateandtime));
+        
+        return {
+            date: game.dateandtime,
+            home: game.home,
+            away: game.away,
+            pick: game.pick,
+            allowDraw: game.allowdraw,
+            score: game.score,
+            id: game.id,
+            hasBegun: (gameDateTime < currentDateTime) ? true : false
+        };
+    });
+    
+    return gamesCollection;
 };
 
 var getPicksNavigationUri = function (firstLastRounds, season, selectedRound) {

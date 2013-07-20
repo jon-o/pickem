@@ -23,13 +23,9 @@ exports.retrivePicksForCurrentRound = function (seasonId, uid) {
     query.on('end', function(roundId) {
         var criteria = {
             seasonId: seasonId,
-            roundId: roundId.rows[0].round,
+            roundId: roundId.rowCount > 0 ? roundId.rows[0].round : 0,
             uid: uid
-        };
-        
-        console.log('GOT HERE');
-        console.log(util.format('season: %s, round: %s, uid: %s', 
-            criteria.seasonId, criteria.roundId, criteria.uid));
+        };            
         
         var picks = getPicksFor(criteria);
     
@@ -101,7 +97,7 @@ var getPicksFor = function (criteria) {
             round: {
                 games: buildGamesCollection(results.picks.rows),
                 id: criteria.roundId,
-                text: results.roundText.rowCount === 1 ? results.roundText.rows[0].text : "",
+                text: results.roundText.rowCount === 1 ? results.roundText.rows[0].text : "Invalid round",
                 navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], criteria.seasonId, criteria.roundId)
             },
             season : {

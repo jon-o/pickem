@@ -7,14 +7,14 @@ exports.findPicksForRound = function (req, res) {
       uid: 'test'
     };
     
-    var games = service.retrievePicksFor(criteria);
+    var picks = service.retrievePicksFor(criteria);
     
-    games.on('error', function(err) {
+    picks.on('error', function(err) {
         console.log('ERROR:');
         console.log(err); 
     });
     
-    games.on('end', function(result) {
+    picks.on('end', function(result) {
         if (result) {
             res.format({            
                 json: function() { res.send(result); }            

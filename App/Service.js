@@ -1,4 +1,5 @@
 var db = require('./DataAccess/Database.js');
+var sql = require('./DataAccess/Sql.js');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
@@ -6,15 +7,7 @@ var _ = require('underscore');
 exports.retrivePicksForCurrentRound = function (seasonId, uid) {
     var eventEmitter = new EventEmitter();
     
-    var currentRoundSql = 
-'SELECT round as Round ' +
-'FROM rounds ' +
-'WHERE roundstartdate <= NOW() ' +
-'AND seasonid = $1 ' +
-'ORDER BY roundstartdate DESC ' +
-'LIMIT 1;';
-    
-    var query = db.executeQuery(currentRoundSql, [seasonId]);
+    var query = db.executeQuery(sql.currentRound, [seasonId]);
 
     query.on('error', function(err) {        
         eventEmitter.emit('error', err);
@@ -46,34 +39,11 @@ exports.retrievePicksFor = function(criteria) {
 };
 
 var getPicksFor = function (criteria) {        
-    var eventEmitter = new EventEmitter();
-    
-    var picksSql = 
-'SELECT g.dateandtime AS DateAndTime, t1.name AS Home, t2.name AS Away, p.pick AS Pick, s.allowdraw AS AllowDraw, g.score as Score, g.id as Id, r.text AS RoundText, sea.name AS SeasonName ' +
-'FROM games g ' +
-'JOIN teams t1 ON g.hometeamid = t1.id ' +
-'JOIN teams t2 ON g.awayteamid = t2.id ' +
-'JOIN rounds r on g.roundid = r.id ' +
-'JOIN seasons sea on r.seasonId = sea.id ' +
-'JOIN leagues l on sea.leagueId = l.id ' +
-'JOIN sports s ON l.sportid = s.id ' +
-'LEFT JOIN users u ON u.thirdpartyid = $1 ' +
-'LEFT JOIN Picks p ON g.Id = p.GameId AND p.UserId = u.Id ' +
-'WHERE g.RoundId = ( ' +
-'    SELECT id ' +
-'    FROM Rounds ' +
-'    WHERE Round = $2 ' +
-'	AND SeasonId = $3) ' +
-'ORDER BY dateandtime;'
-
-    var firstLastRoundsSql = 
-'SELECT MIN(Round) AS FirstRound, MAX(Round) AS LastRound ' +
-'FROM rounds ' +
-'WHERE SeasonId = $1';
+    var eventEmitter = new EventEmitter();        
     
     var parallelQuery = db.executeQueries([
-        { query: picksSql, params: [criteria.uid, criteria.roundId, criteria.seasonId], name: 'picks'},        
-        { query: firstLastRoundsSql, params: [criteria.seasonId], name: 'firstLastRounds'}]);
+        { query: sql.picks, params: [criteria.uid, criteria.roundId, criteria.seasonId], name: 'picks'},        
+        { query: sql.firstLastRounds, params: [criteria.seasonId], name: 'firstLastRounds'}]);
     
     parallelQuery.on('error', function(err) {
        eventEmitter.emit('error', err);
@@ -127,14 +97,14 @@ var getPicksNavigationUri = function (firstLastRounds, season, selectedRound) {
     var isValidFirstRound = (validSeasonId && selectedRoundInt !== parseInt(firstLastRounds.firstround, 10));
     var isValidLastRound = (validSeasonId && selectedRoundInt !== parseInt(firstLastRounds.lastround, 10));    
     
-    var uris = {
+    var uriCollection = {
         previousUri: isValidFirstRound ? 
             buildPicksNavigationUri(season, selectedRoundInt - 1) : null,
         nextUri: isValidLastRound ?
             buildPicksNavigationUri(season, selectedRoundInt + 1) : null
     };
     
-    return uris;
+    return uriCollection;
 };
 
 var buildPicksNavigationUri = function (seasonId, round) {

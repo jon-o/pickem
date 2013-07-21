@@ -80,15 +80,16 @@ var getPicksFor = function (criteria) {
     });
     
     parallelQuery.on('end', function(results) {
+        var validResponse = results.picks.rowCount > 0;
         var response = { 
             round: {
                 games: buildGamesCollection(results.picks.rows),
                 id: criteria.roundId,
-                text: results.picks.rowCount > 0 ? results.picks.rows[0].roundtext : 'Invalid round',
+                text: validResponse ? results.picks.rows[0].roundtext : 'Invalid round',
                 navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], criteria.seasonId, criteria.roundId)
             },
             season : {
-                name: results.picks.rowCount > 0 ? results.picks.rows[0].seasonname : 'Invalid season'
+                name: validResponse ? results.picks.rows[0].seasonname : 'Invalid season'
             }
         };
         

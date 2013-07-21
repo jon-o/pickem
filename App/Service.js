@@ -49,7 +49,7 @@ var getPicksFor = function (criteria) {
     var eventEmitter = new EventEmitter();
     
     var picksSql = 
-'SELECT g.dateandtime AS DateAndTime, t1.name AS Home, t2.name AS Away, p.pick AS Pick, s.allowdraw AS AllowDraw, g.score as Score, g.id as Id ' +
+'SELECT g.dateandtime AS DateAndTime, t1.name AS Home, t2.name AS Away, p.pick AS Pick, s.allowdraw AS AllowDraw, g.score as Score, g.id as Id, r.text AS RoundText, sea.name AS SeasonName ' +
 'FROM games g ' +
 'JOIN teams t1 ON g.hometeamid = t1.id ' +
 'JOIN teams t2 ON g.awayteamid = t2.id ' +
@@ -65,28 +65,15 @@ var getPicksFor = function (criteria) {
 '    WHERE Round = $2 ' +
 '	AND SeasonId = $3) ' +
 'ORDER BY dateandtime;'
-    
-    var roundTextSql = 
-'SELECT Text AS Text ' +
-'FROM rounds ' +
-'WHERE SeasonId = $1 ' +
-'AND Round = $2';
 
     var firstLastRoundsSql = 
 'SELECT MIN(Round) AS FirstRound, MAX(Round) AS LastRound ' +
 'FROM rounds ' +
 'WHERE SeasonId = $1';
-
-    var seasonNameSql = 
-'SELECT name AS Name ' +
-'FROM seasons ' +
-'WHERE id = $1';
     
     var parallelQuery = db.executeQueries([
-        { query: picksSql, params: [criteria.uid, criteria.roundId, criteria.seasonId], name: 'picks'},
-        { query: roundTextSql, params: [criteria.seasonId, criteria.roundId], name: 'roundText'},
-        { query: firstLastRoundsSql, params: [criteria.seasonId], name: 'firstLastRounds'},
-        { query: seasonNameSql, params: [criteria.seasonId], name: 'seasonName'}]);
+        { query: picksSql, params: [criteria.uid, criteria.roundId, criteria.seasonId], name: 'picks'},        
+        { query: firstLastRoundsSql, params: [criteria.seasonId], name: 'firstLastRounds'}]);
     
     parallelQuery.on('error', function(err) {
        eventEmitter.emit('error', err);
@@ -97,11 +84,11 @@ var getPicksFor = function (criteria) {
             round: {
                 games: buildGamesCollection(results.picks.rows),
                 id: criteria.roundId,
-                text: results.roundText.rowCount === 1 ? results.roundText.rows[0].text : "Invalid round",
+                text: results.picks.rowCount > 0 ? results.picks.rows[0].roundtext : 'Invalid round',
                 navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], criteria.seasonId, criteria.roundId)
             },
             season : {
-                name: results.seasonName.rows[0].name
+                name: results.picks.rowCount > 0 ? results.picks.rows[0].seasonname : 'Invalid season'
             }
         };
         

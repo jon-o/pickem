@@ -13,20 +13,20 @@ exports.retrivePicksForCurrentRound = function (seasonId, uid) {
         eventEmitter.emit('error', err);
     });
     
-    query.on('end', function(roundId) {
+    query.on('end', function(round) {
         var criteria = {
             seasonId: seasonId,
-            roundId: roundId.rowCount > 0 ? roundId.rows[0].round : 0,
+            round: round.rowCount > 0 ? round.rows[0].round : 0,
             uid: uid
         };            
         
-        var picks = getPicksFor(criteria);
+        var response = getPicksFor(criteria);
     
-        picks.on('error', function(err) {
+        response.on('error', function(err) {
             eventEmitter.emit('error', err);
         });
         
-        picks.on('end', function(result) {
+        response.on('end', function(result) {
             eventEmitter.emit('end', result);        
         });                
     });
@@ -42,7 +42,7 @@ var getPicksFor = function (criteria) {
     var eventEmitter = new EventEmitter();        
     
     var parallelQuery = db.executeQueries([
-        { query: sql.picks, params: [criteria.uid, criteria.roundId, criteria.seasonId], name: 'picks'},        
+        { query: sql.picks, params: [criteria.uid, criteria.round, criteria.seasonId], name: 'picks'},        
         { query: sql.firstLastRounds, params: [criteria.seasonId], name: 'firstLastRounds'}]);
     
     parallelQuery.on('error', function(err) {
@@ -54,9 +54,9 @@ var getPicksFor = function (criteria) {
         var response = { 
             round: {
                 games: buildGamesCollection(results.picks.rows),
-                id: criteria.roundId,
+                id: criteria.round,
                 text: validResponse ? results.picks.rows[0].roundtext : 'Invalid round',
-                navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], criteria.seasonId, criteria.roundId)
+                navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], criteria.seasonId, criteria.round)
             },
             season : {
                 name: validResponse ? results.picks.rows[0].seasonname : 'Invalid season'

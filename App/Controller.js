@@ -3,18 +3,17 @@ var service = require("./Service.js");
 exports.findPicksForRound = function (req, res) {        
     var criteria = {
       seasonId: req.params.seasonId,
-      roundId: req.params.roundId,
+      round: req.params.round,
       uid: 'test'
     };
     
-    var picks = service.retrievePicksFor(criteria);
+    var task = service.retrievePicksFor(criteria);
     
-    picks.on('error', function(err) {
-        console.log('ERROR:');
-        console.log(err); 
+    task.on('error', function(err) {
+        handleError(err, res);
     });
     
-    picks.on('end', function(result) {
+    task.on('end', function(result) {
         if (result) {
             res.format({            
                 json: function() { res.send(result); }            
@@ -26,14 +25,13 @@ exports.findPicksForRound = function (req, res) {
 };
 
 exports.findPicksForCurrentRound = function (req, res) {                
-    var picks = service.retrivePicksForCurrentRound(req.params.seasonId, 'test');
+    var task = service.retrivePicksForCurrentRound(req.params.seasonId, 'test');
     
-    picks.on('error', function(err) {
-        console.log('ERROR:');
-        console.log(err); 
+    task.on('error', function(err) {
+        handleError(err, res);        
     });
     
-    picks.on('end', function(result) {
+    task.on('end', function(result) {
         if (result) {
             res.format({            
                 json: function() { res.send(result); }            
@@ -62,8 +60,8 @@ exports.savePick = function(req, res) {
     });
 };
 
-function handleError(err, res) {
+var handleError = function (err, res) {
     console.log("****ERROR****");
     console.log(err);
     res.send(500, "Oooops...something went wrong.");
-}
+};

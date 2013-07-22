@@ -32,3 +32,13 @@ exports.firstLastRounds = util.format('%s %s %s',
 'SELECT MIN(Round) AS FirstRound, MAX(Round) AS LastRound',
 'FROM rounds',
 'WHERE SeasonId = $1');
+
+exports.savePick = util.format('%s %s %s %s',
+'UPDATE picks SET pick = $3',
+'WHERE userid = (SELECT id FROM users WHERE thirdpartyid = $1) AND gameid = $2;',
+'INSERT INTO picks (userid, gameid, pick) SELECT (SELECT id FROM users WHERE thirdpartyid = $1), $2, $3',
+'WHERE NOT EXISTS (SELECT 1 FROM picks WHERE userid = (SELECT id FROM users WHERE thirdpartyid = $1) AND gameid = $2);');
+
+exports.createUser = util.format('%s %s',
+'INSERT INTO users (thirdpartyid, facebookid) SELECT $1, $2',
+'WHERE NOT EXISTS (SELECT 1 FROM users WHERE thirdpartyid = CAST($1 AS varchar(30)))');

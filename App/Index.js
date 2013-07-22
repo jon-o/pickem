@@ -14,6 +14,8 @@ var controller = require("./Controller.js");
 var app = express();
 
 app.configure(function() {
+    app.set('view engine', 'jade');
+    app.set('views', __dirname + '/Views');
     app.use(express.static(path.join(__dirname, 'Public')));
     app.use(express.bodyParser());
 });

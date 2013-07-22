@@ -16,6 +16,7 @@
     "express": "3.0",
     "pg": "2.0.0",
     "async": "0.2.9",
+    "underscore": "1.5.1",
     "nodetime": ">=0.8.0"
   },
   "engines": {

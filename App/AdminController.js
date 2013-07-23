@@ -24,7 +24,8 @@ exports.showRounds = function(req, res) {
     });
     
     task.on('end', function(result) {
-        res.render('rounds', { rounds: result.rows }) ;
+        res.render('rounds', 
+            { rounds: result.rows, seasonId: req.params.seasonId });
     });
 };
 

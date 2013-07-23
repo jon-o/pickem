@@ -1,11 +1,24 @@
 extends layout
 
 block content
-
-    h1 Seasons
+    .span7
+        .row
+            h1 Seasons
+        
+            a.btn.btn-success.text-center(href='/admin/season/create') Create New Season
+        
+        br
     
-    table
-        each season in seasons
-            tr
-                td 
-                    a(href='/admin/season/#{season.id}') #{season.name}
+        .row
+            table.table.table-striped
+                thead
+                    tr
+                        th Name
+                        th
+                tbody
+                    each season in seasons
+                        tr
+                            td.span6
+                                a(href='/admin/season/#{season.id}') #{season.name}
+                            td.span1
+                                a.btn(href='/admin/season/#{season.id}/edit') Edit

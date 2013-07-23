@@ -1,11 +1,24 @@
 extends layout
 
 block content
-
-    h1 Rounds
-    
-    table
-        each round in rounds
-            tr
-                td 
-                    a(href='/admin/season/#{round.seasonid}/round/#{round.round}') #{round.text}
+    .span7
+        .row
+            h1 Rounds
+            
+            a.btn.btn-success.text-center(href='/admin/season/#{seasonId}/round/create') Create New Round
+        
+        br
+        
+        .row
+            table.table.table-striped
+                thead
+                    tr
+                        th Name
+                        th
+                tbody
+                    each round in rounds
+                        tr
+                            td.span6
+                                a(href='/admin/season/#{seasonId}/round/#{round.round}') #{round.text}
+                            td.span1
+                                a.btn(href='/admin/season/#{seasonId}/round/#{round.round}/edit') Edit

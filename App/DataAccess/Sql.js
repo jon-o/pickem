@@ -48,7 +48,7 @@ exports.createUser = util.format('%s %s',
 exports.getSeasons = 'SELECT id, name FROM seasons';
 
 exports.getRounds = util.format('%s %s %s %s',
-'SELECT seasonid, round, text',
+'SELECT round, text',
 'FROM rounds',
 'WHERE seasonId = $1',
 'ORDER BY round');

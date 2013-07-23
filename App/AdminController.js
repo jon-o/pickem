@@ -12,6 +12,22 @@ exports.showSeasons = function(req, res) {
     });
 };
 
+exports.showRounds = function(req, res) {
+    var criteria = {
+        seasonId: req.params.seasonId
+    };
+    
+    var task = adminService.getRounds(criteria);
+    
+    task.on('error', function(err) {
+        handleError(err, res);
+    });
+    
+    task.on('end', function(result) {
+        res.render('rounds', { rounds: result.rows }) ;
+    });
+};
+
 var handleError = function(err, res) {
     console.log("****ERROR****");
     console.log(err);

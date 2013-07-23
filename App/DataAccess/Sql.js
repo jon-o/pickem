@@ -42,3 +42,9 @@ exports.savePick = util.format('%s %s %s %s',
 exports.createUser = util.format('%s %s',
 'INSERT INTO users (thirdpartyid, facebookid) SELECT $1, $2',
 'WHERE NOT EXISTS (SELECT 1 FROM users WHERE thirdpartyid = CAST($1 AS varchar(30)))');
+
+
+//*** ADMIN ***
+exports.getSeasons = 'SELECT id, name FROM seasons';
+
+exports.getRounds = 'SELECT * FROM rounds WHERE seasonId = $1 ORDER BY round';

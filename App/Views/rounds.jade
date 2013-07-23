@@ -1,0 +1,11 @@
+extends layout
+
+block content
+
+    h1 Rounds
+    
+    table
+        each round in rounds
+            tr
+                td 
+                    a(href='admin/season/#{round.seasonid}/round/#{round.round}') #{round.text}

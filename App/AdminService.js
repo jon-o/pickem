@@ -17,3 +17,21 @@ exports.getSeasons = function() {
     
     return eventEmitter;
 };
+
+exports.getRounds = function(criteria) {
+    var eventEmitter = new EventEmitter();
+    console.log(criteria.seasonId);
+    
+    var query = db.executeQuery(sql.getRounds, [criteria.seasonId]);
+
+    query.on('error', function(err) {        
+        eventEmitter.emit('error', err);
+    });
+    
+    query.on('end', function(result) {
+        console.log(result);
+        eventEmitter.emit('end', result);        
+    });
+    
+    return eventEmitter;
+};

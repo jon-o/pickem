@@ -10,6 +10,7 @@ var express = require("express");
 var path = require("path");
 //var games = require("./Routes/Games.js");
 var controller = require("./Controller.js");
+var adminController = require("./AdminController.js");
 
 var app = express();
 
@@ -28,6 +29,10 @@ app.get('/api/picks/season/:seasonId/round/:round', controller.findPicksForRound
 app.get('/api/picks/season/:seasonId', controller.findPicksForCurrentRound);
 
 app.post('/api/picks', controller.savePick);
+
+//*** ADMIN ***
+app.get('/admin', adminController.showSeasons);
+app.get('/admin/season/:seasonId', adminController.showRounds);
 
 app.listen(process.env.PORT, process.env.IP);
 

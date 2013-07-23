@@ -1,0 +1,11 @@
+extends layout
+
+block content
+
+    h1 Games
+    
+    table
+        each game in games
+            tr
+                td #{game.dateandtime.toUTCString()}
+                td #{game.home} v #{game.away}

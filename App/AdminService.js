@@ -33,3 +33,19 @@ exports.getRounds = function(criteria) {
     
     return eventEmitter;
 };
+
+exports.getGames = function(criteria) {
+    var eventEmitter = new EventEmitter();
+    
+    var query = db.executeQuery(sql.getGames, [criteria.round]);
+
+    query.on('error', function(err) {        
+        eventEmitter.emit('error', err);
+    });
+    
+    query.on('end', function(result) {
+        eventEmitter.emit('end', result);        
+    });
+    
+    return eventEmitter;
+};

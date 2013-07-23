@@ -28,6 +28,22 @@ exports.showRounds = function(req, res) {
     });
 };
 
+exports.showGames = function(req, res) {
+    var criteria = {
+        round: req.params.round
+    };
+    
+    var task = adminService.getGames(criteria);
+    
+    task.on('error', function(err) {
+        handleError(err, res);
+    });
+    
+    task.on('end', function(result) {
+        res.render('games', { games: result.rows }) ;
+    });
+};
+
 var handleError = function(err, res) {
     console.log("****ERROR****");
     console.log(err);

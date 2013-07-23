@@ -47,4 +47,17 @@ exports.createUser = util.format('%s %s',
 //*** ADMIN ***
 exports.getSeasons = 'SELECT id, name FROM seasons';
 
-exports.getRounds = 'SELECT seasonid, round, text FROM rounds WHERE seasonId = $1 ORDER BY round';
+exports.getRounds = util.format('%s %s %s %s',
+'SELECT seasonid, round, text',
+'FROM rounds',
+'WHERE seasonId = $1',
+'ORDER BY round');
+
+exports.getGames = util.format('%s %s %s %s %s %s %s',
+'SELECT g.dateandtime, home.name AS home, away.name AS away',
+'FROM games AS g',
+'INNER JOIN rounds AS r ON r.id = g.roundId',
+'INNER JOIN teams AS home ON home.id = g.hometeamid',
+'INNER JOIN teams AS away ON away.id = g.awayteamid',
+'WHERE r.round = $1',
+'ORDER BY dateandtime');

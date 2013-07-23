@@ -33,6 +33,7 @@ app.post('/api/picks', controller.savePick);
 //*** ADMIN ***
 app.get('/admin', adminController.showSeasons);
 app.get('/admin/season/:seasonId', adminController.showRounds);
+app.get('/admin/season/:seasonId/round/:round', adminController.showGames);
 
 app.listen(process.env.PORT, process.env.IP);
 

@@ -4,32 +4,35 @@ var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
 
-exports.retrivePicksForCurrentRound = function (seasonId, uid) {
-    var eventEmitter = new EventEmitter();
-    
-    var query = db.executeQuery(sql.currentRound, [seasonId]);
 
-    query.on('error', function(err) {        
-        eventEmitter.emit('error', err);
+exports.retrivePicksForCurrentRound = function(seasonId, uid) {
+    var eventEmitter = new EventEmitter();        
+    
+    var parallelQuery = db.executeQueries([
+        { query: sql.picksForCurrentRound, params: [uid, seasonId], name: 'picks'},        
+        { query: sql.firstLastRounds, params: [seasonId], name: 'firstLastRounds'}]);
+    
+    parallelQuery.on('error', function(err) {
+       eventEmitter.emit('error', err);
     });
     
-    query.on('end', function(round) {
-        var criteria = {
-            seasonId: seasonId,
-            round: round.rowCount > 0 ? round.rows[0].round : 0,
-            uid: uid
-        };            
+    parallelQuery.on('end', function(results) {
+        var validResponse = results.picks.rowCount > 0;
+        var round = validResponse ? results.picks.rows[0].round : 0;
+        var response = { 
+            round: {
+                games: buildGamesCollection(results.picks.rows),
+                id: validResponse ? round : 0,
+                text: validResponse ? results.picks.rows[0].roundtext : 'Invalid round',
+                navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], seasonId, round)
+            },
+            season : {
+                name: validResponse ? results.picks.rows[0].seasonname : 'Invalid season'
+            }
+        };
         
-        var response = getPicksFor(criteria);
-    
-        response.on('error', function(err) {
-            eventEmitter.emit('error', err);
-        });
-        
-        response.on('end', function(result) {
-            eventEmitter.emit('end', result);        
-        });                
-    });
+        eventEmitter.emit('end', response);
+    });    
     
     return eventEmitter;
 };

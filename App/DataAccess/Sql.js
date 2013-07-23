@@ -1,13 +1,26 @@
 var util = require('util');
 
 
-exports.currentRound = util.format('%s %s %s %s %s %s', 
-'SELECT round AS Round',
-'FROM rounds',
-'WHERE roundstartdate <= NOW()',
-'AND seasonid = $1',
-'ORDER BY roundstartdate DESC',
-'LIMIT 1;');
+exports.picksForCurrentRound = util.format('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s',
+'SELECT g.dateandtime AS DateAndTime, t1.name AS Home, t2.name AS Away, p.pick AS Pick, s.allowdraw AS AllowDraw,', 
+'g.score AS Score, g.id AS Id, r.text AS RoundText, sea.name AS SeasonName, r.round AS round',
+'FROM games g',
+'JOIN teams t1 ON g.hometeamid = t1.id',
+'JOIN teams t2 ON g.awayteamid = t2.id',
+'JOIN rounds r ON g.roundid = r.id',
+'JOIN seasons sea on r.seasonId = sea.id',
+'JOIN leagues l ON sea.leagueId = l.id',
+'JOIN sports s ON l.sportid = s.id',
+'LEFT JOIN users u ON u.thirdpartyid = $1',
+'LEFT JOIN Picks p ON g.Id = p.GameId AND p.UserId = u.Id',
+'WHERE g.RoundId = (',
+'    SELECT id',
+'    FROM rounds',
+'    WHERE roundstartdate <= NOW()',
+'    AND seasonid = $2',
+'    ORDER BY roundstartdate DESC',
+'    LIMIT 1)',
+'ORDER BY dateandtime;');
 
 exports.picks = util.format('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s',
 'SELECT g.dateandtime AS DateAndTime, t1.name AS Home, t2.name AS Away, p.pick AS Pick,',

@@ -20,7 +20,6 @@ exports.getSeasons = function() {
 
 exports.getRounds = function(criteria) {
     var eventEmitter = new EventEmitter();
-    console.log(criteria.seasonId);
     
     var query = db.executeQuery(sql.getRounds, [criteria.seasonId]);
 
@@ -29,7 +28,6 @@ exports.getRounds = function(criteria) {
     });
     
     query.on('end', function(result) {
-        console.log(result);
         eventEmitter.emit('end', result);        
     });
     

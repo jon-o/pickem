@@ -47,4 +47,4 @@ exports.createUser = util.format('%s %s',
 //*** ADMIN ***
 exports.getSeasons = 'SELECT id, name FROM seasons';
 
-exports.getRounds = 'SELECT * FROM rounds WHERE seasonId = $1 ORDER BY round';
+exports.getRounds = 'SELECT seasonid, round, text FROM rounds WHERE seasonId = $1 ORDER BY round';

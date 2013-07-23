@@ -1,0 +1,11 @@
+extends layout
+
+block content
+
+    h1 Seasons
+    
+    table
+        each season in seasons
+            tr
+                td 
+                    a(href='admin/season/#{season.id}') #{season.name}

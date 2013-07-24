@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    .span7
+    .span10
         .row
             h1 Games
             
@@ -22,7 +22,6 @@ block content
                             tr
                                 td #{game.dateandtime.toUTCString()}
                                 td #{game.home} v #{game.away}
-                                td #{game.result}
                                 td 
                                     select(id='result#{i}')
                                         option(value='') Please choose...

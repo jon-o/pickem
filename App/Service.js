@@ -47,20 +47,26 @@ exports.retrievePicksFor = function(criteria) {
 
 var buildRetrievePicksResponse = function (results, seasonId) {
     var validResponse = results.picks.rowCount > 0;
-        var round = validResponse ? results.picks.rows[0].round : 0;
-        var response = { 
+    var response = {};
+    
+    if (validResponse) {
+        var round = results.picks.rows[0].round;
+        response = { 
             round: {
                 games: buildGamesCollection(results.picks.rows),
-                id: validResponse ? round : 0,
-                text: validResponse ? results.picks.rows[0].roundtext : 'Invalid round',
+                id: round,
+                text: results.picks.rows[0].roundtext,
                 navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], seasonId, round)
             },
             season : {
-                name: validResponse ? results.picks.rows[0].seasonname : 'Invalid season'
+                name: results.picks.rows[0].seasonname
             }
-        }; 
+        };    
+    } else {
+        response = { error: 'Invalid seasonId / round' };
+    }
         
-        return response;
+    return response;
 };
 
 var buildGamesCollection = function (games) {

@@ -1,11 +1,43 @@
 extends layout
 
 block content
-
-    h1 Games
+    .span7
+        .row
+            h1 Games
+            
+            a.btn.btn-success.text-center(href='/admin/season/#{seasonId}/round/#{round}/game/create') Create New Game
     
-    table
-        each game in games
-            tr
-                td #{game.dateandtime.toUTCString()}
-                td #{game.home} v #{game.away}
+        br
+        
+        .row
+            form(id='form', method='post', action='/')
+                table.table.table-striped
+                    thead
+                        th Date & Time
+                        th Fixture
+                        th Result
+                        th Score
+                    tbody
+                        each game, i in games
+                            tr
+                                td #{game.dateandtime.toUTCString()}
+                                td #{game.home} v #{game.away}
+                                td #{game.result}
+                                td 
+                                    select(id='result#{i}')
+                                        option(value='') Please choose...
+                                        if (game.result == 'HOME')
+                                            option(value='HOME', selected) Home
+                                        else
+                                            option(value='HOME') Home
+                                        if (game.result == 'DRAW')
+                                            option(value='DRAW', selected) Draw
+                                        else
+                                            option(value='DRAW') Draw
+                                        if (game.result == 'AWAY')
+                                            option(value='AWAY', selected) Away
+                                        else
+                                            option(value='AWAY') Away
+                                td 
+                                    input(id='score#{i}', name='score#{i}', value='#{game.score}')
+                                    input(id='id#{0}', name='id#{0}', value='#{game.id}', type='hidden')

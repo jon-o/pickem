@@ -41,7 +41,9 @@ exports.showGames = function(req, res) {
     });
     
     task.on('end', function(result) {
-        res.render('games', { games: result.rows }) ;
+        res.render('games', 
+            { games: result.rows, seasonId: req.params.seasonId,
+            round: req.params.round}) ;
     });
 };
 

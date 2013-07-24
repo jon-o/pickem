@@ -67,7 +67,7 @@ exports.getRounds = util.format('%s %s %s %s',
 'ORDER BY round');
 
 exports.getGames = util.format('%s %s %s %s %s %s %s',
-'SELECT g.dateandtime, home.name AS home, away.name AS away',
+'SELECT g.id, g.dateandtime, home.name AS home, away.name AS away, g.result, COALESCE(g.score, \'\') AS score',
 'FROM games AS g',
 'INNER JOIN rounds AS r ON r.id = g.roundId',
 'INNER JOIN teams AS home ON home.id = g.hometeamid',

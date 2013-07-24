@@ -16,20 +16,8 @@ exports.retrivePicksForCurrentRound = function(seasonId, uid) {
        eventEmitter.emit('error', err);
     });
     
-    parallelQuery.on('end', function(results) {
-        var validResponse = results.picks.rowCount > 0;
-        var round = validResponse ? results.picks.rows[0].round : 0;
-        var response = { 
-            round: {
-                games: buildGamesCollection(results.picks.rows),
-                id: validResponse ? round : 0,
-                text: validResponse ? results.picks.rows[0].roundtext : 'Invalid round',
-                navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], seasonId, round)
-            },
-            season : {
-                name: validResponse ? results.picks.rows[0].seasonname : 'Invalid season'
-            }
-        };
+    parallelQuery.on('end', function(results) {    
+        var response = buildRetrievePicksResponse(results, seasonId);
         
         eventEmitter.emit('end', response);
     });    
@@ -38,10 +26,6 @@ exports.retrivePicksForCurrentRound = function(seasonId, uid) {
 };
 
 exports.retrievePicksFor = function(criteria) {
-    return getPicksFor(criteria);
-};
-
-var getPicksFor = function (criteria) {        
     var eventEmitter = new EventEmitter();        
     
     var parallelQuery = db.executeQueries([
@@ -52,24 +36,37 @@ var getPicksFor = function (criteria) {
        eventEmitter.emit('error', err);
     });
     
-    parallelQuery.on('end', function(results) {
-        var validResponse = results.picks.rowCount > 0;
-        var response = { 
-            round: {
-                games: buildGamesCollection(results.picks.rows),
-                id: criteria.round,
-                text: validResponse ? results.picks.rows[0].roundtext : 'Invalid round',
-                navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], criteria.seasonId, criteria.round)
-            },
-            season : {
-                name: validResponse ? results.picks.rows[0].seasonname : 'Invalid season'
-            }
-        };
+    parallelQuery.on('end', function(results) {            
+        var response = buildRetrievePicksResponse(results, criteria.seasonId);
         
         eventEmitter.emit('end', response);
     });    
     
     return eventEmitter;
+};
+
+var buildRetrievePicksResponse = function (results, seasonId) {
+    var validResponse = results.picks.rowCount > 0;
+    var response = {};
+    
+    if (validResponse) {
+        var round = results.picks.rows[0].round;
+        response = { 
+            round: {
+                games: buildGamesCollection(results.picks.rows),
+                id: round,
+                text: results.picks.rows[0].roundtext,
+                navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], seasonId, round)
+            },
+            season : {
+                name: results.picks.rows[0].seasonname
+            }
+        };    
+    } else {
+        response = { error: 'Invalid seasonId / round' };
+    }
+        
+    return response;
 };
 
 var buildGamesCollection = function (games) {

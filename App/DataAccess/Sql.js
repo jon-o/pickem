@@ -23,8 +23,8 @@ exports.picksForCurrentRound = util.format('%s %s %s %s %s %s %s %s %s %s %s %s 
 'ORDER BY dateandtime;');
 
 exports.picks = util.format('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s',
-'SELECT g.dateandtime AS DateAndTime, t1.name AS Home, t2.name AS Away, p.pick AS Pick,',
-'s.allowdraw AS AllowDraw, g.score AS Score, g.id AS Id, r.text AS RoundText, sea.name AS SeasonName',
+'SELECT g.dateandtime AS DateAndTime, t1.name AS Home, t2.name AS Away, p.pick AS Pick, s.allowdraw AS AllowDraw, ',
+'g.score AS Score, g.id AS Id, r.text AS RoundText, sea.name AS SeasonName, r.round AS round',
 'FROM games g',
 'JOIN teams t1 ON g.hometeamid = t1.id',
 'JOIN teams t2 ON g.awayteamid = t2.id',

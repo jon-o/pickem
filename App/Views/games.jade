@@ -4,13 +4,18 @@ block content
     .span10
         .row
             h1 Games
-            
+         
+        .row
             a.btn.btn-success.text-center(href='/admin/season/#{seasonId}/round/#{round}/game/create') Create New Game
+            
     
         br
         
-        .row
-            form(id='form', method='post', action='/')
+        form(id='form', method='post', action='/admin/season/#{seasonId}/round/#{round}')
+            .row
+                .span1.offset9
+                    button.btn.btn-success.text-center(type='submit') Update
+            .row
                 table.table.table-striped
                     thead
                         th Date & Time
@@ -23,7 +28,7 @@ block content
                                 td #{game.dateandtime.toUTCString()}
                                 td #{game.home} v #{game.away}
                                 td 
-                                    select(id='result#{i}')
+                                    select(id='result#{i}', name='result#{i}')
                                         option(value='') Please choose...
                                         if (game.result == 'HOME')
                                             option(value='HOME', selected) Home
@@ -39,4 +44,9 @@ block content
                                             option(value='AWAY') Away
                                 td 
                                     input(id='score#{i}', name='score#{i}', value='#{game.score}')
-                                    input(id='id#{0}', name='id#{0}', value='#{game.id}', type='hidden')
+                                    input(id='id#{i}', name='id#{i}', value='#{game.id}', type='hidden')
+                    
+                input(id='count', name='count', value='#{games.length}', type='hidden')
+            .row
+                .span1.offset9
+                    button.btn.btn-success.text-center(type='submit') Update

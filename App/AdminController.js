@@ -1,3 +1,4 @@
+var util = require("util");
 var adminService = require("./AdminService.js");
 
 exports.showSeasons = function(req, res) {
@@ -24,8 +25,9 @@ exports.showRounds = function(req, res) {
     });
     
     task.on('end', function(result) {
-        res.render('rounds', 
-            { rounds: result.rows, seasonId: req.params.seasonId });
+        res.render('rounds', { 
+            rounds: result.rows, 
+            seasonId: req.params.seasonId });
     });
 };
 
@@ -41,9 +43,39 @@ exports.showGames = function(req, res) {
     });
     
     task.on('end', function(result) {
-        res.render('games', 
-            { games: result.rows, seasonId: req.params.seasonId,
-            round: req.params.round}) ;
+        res.render('games', { 
+            games: result.rows, 
+            seasonId: req.params.seasonId,
+            round: req.params.round });
+    });
+};
+
+exports.updateGames = function(req, res) {
+    var criteria = {
+        games: []
+    };
+    
+    for (var i = 0; i < req.body.count; i++) {
+        var game = {
+            id: req.body['id' + i],
+            result: req.body['result' + i],
+            score: req.body['score' + i]
+        };
+        
+        criteria.games[i] = game;
+    }
+    
+    var task = adminService.updateGames(criteria);
+    
+    task.on('error', function(err) {
+        handleError(err, res);
+    });
+    
+    task.on('end', function(result) {
+        var redirectUrl = util.format('/admin/season/%s/round/%s', req.params.seasonId,
+            req.params.round);
+            
+        res.redirect(redirectUrl);
     });
 };
 

@@ -74,3 +74,8 @@ exports.getGames = util.format('%s %s %s %s %s %s %s',
 'INNER JOIN teams AS away ON away.id = g.awayteamid',
 'WHERE r.round = $1',
 'ORDER BY dateandtime');
+
+exports.updateGame = util.format('%s %s %s',
+'UPDATE games',
+'SET result = $2, score = $3',
+'WHERE id = $1');

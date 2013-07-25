@@ -6,8 +6,6 @@ var EventEmitter = require("events").EventEmitter;
 exports.executeQuery = function(userQuery, params) {
     var eventEmitter = new EventEmitter();
     
-    eventEmitter.emit('Start');
-    
     pg.connect(config.databaseConnectionString, function(err, client, done) {
          if (err) {
              eventEmitter.emit('error', err);
@@ -39,8 +37,6 @@ exports.executeQuery = function(userQuery, params) {
 
 exports.executeUpsert = function(userQuery, params) {
     var eventEmitter = new EventEmitter();
-    
-    eventEmitter.emit('Start');
     
     pg.connect(config.databaseConnectionString, function(err, client, done) {
          if (err) {
@@ -75,8 +71,6 @@ exports.executeUpsert = function(userQuery, params) {
 
 exports.executeQueries = function(userQueries) {
     var eventEmitter = new EventEmitter();
-    
-    eventEmitter.emit('Start');
     
     var tasks = createTasks(userQueries);
     

@@ -35,6 +35,36 @@ exports.executeQuery = function(userQuery, params) {
     return eventEmitter;
 };
 
+exports.executeMassQuery = function(userQuery, paramsCollection) {
+    var eventEmitter = new EventEmitter();
+    
+    pg.connect(config.databaseConnectionString, function(err, client, done) {
+         if (err) {
+            eventEmitter.emit('error', err);
+            done(client);
+         } else {
+            var query = null;
+             
+            paramsCollection.forEach(function(params) {    
+                query = client.query(userQuery, params); 
+            });
+             
+            query.on('error', function(err) {
+                eventEmitter.emit('error', err);
+                done(client);
+            });
+             
+            query.on('end', function(result) {
+                eventEmitter.emit('end', result);
+            });
+             
+            done();
+        }
+    });
+    
+    return eventEmitter;
+};
+
 exports.executeUpsert = function(userQuery, params) {
     var eventEmitter = new EventEmitter();
     

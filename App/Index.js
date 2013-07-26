@@ -9,6 +9,7 @@ if (process.env.NODETIME_ACCOUNT_KEY) {
 var express = require("express");
 var path = require("path");
 //var games = require("./Routes/Games.js");
+var config = require('./Config.js');
 var controller = require("./Controller.js");
 var adminController = require("./AdminController.js");
 
@@ -28,6 +29,8 @@ var errorHandler = function(err, req, res, next) {
     res.description = 'Something went wrong';
     res.render('error');
 };
+
+var auth = express.basicAuth(config.adminUser, config.adminPassword);
 
 app.configure(function() {
     app.set('view engine', 'jade');
@@ -49,10 +52,10 @@ app.get('/api/picks/season/:seasonId', controller.findPicksForCurrentRound);
 app.post('/api/picks', controller.savePick);
 
 //*** ADMIN ***
-app.get('/admin', adminController.showSeasons);
-app.get('/admin/season/:seasonId', adminController.showRounds);
-app.get('/admin/season/:seasonId/round/:round', adminController.showGames);
-app.post('/admin/season/:seasonId/round/:round', adminController.updateGames);
+app.get('/admin', auth, adminController.showSeasons);
+app.get('/admin/season/:seasonId', auth, adminController.showRounds);
+app.get('/admin/season/:seasonId/round/:round', auth, adminController.showGames);
+app.post('/admin/season/:seasonId/round/:round', auth, adminController.updateGames);
 
 app.listen(process.env.PORT, process.env.IP);
 

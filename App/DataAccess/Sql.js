@@ -56,6 +56,16 @@ exports.createUser = util.format('%s %s',
 'INSERT INTO users (thirdpartyid, facebookid) SELECT $1, $2',
 'WHERE NOT EXISTS (SELECT 1 FROM users WHERE thirdpartyid = CAST($1 AS varchar(30)))');
 
+exports.getLeaderboardForSeason = util.format('%s %s %s %s %s %s %s %s',
+'SELECT row_number() OVER(ORDER BY COUNT(u.Id) DESC) AS position,',
+'    COUNT(u.Id) AS correctpicks, u.thirdpartyid, u.facebookId',
+'FROM picks AS p',
+'INNER JOIN games AS g on g.id = p.gameId',
+'INNER JOIN rounds AS r on r.id = g.roundId',
+'INNER JOIN users AS u ON u.id = p.userId',
+'WHERE r.seasonId = $1',
+ '   AND CAST(p.pick AS text) = CAST(g.result AS text)',
+'GROUP BY u.Id');
 
 //*** ADMIN ***
 exports.getSeasons = 'SELECT id, name FROM seasons';

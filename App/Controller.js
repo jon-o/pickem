@@ -12,7 +12,7 @@ exports.findPicksForRound = function (req, res) {
     var criteria = {
       seasonId: req.params.seasonId,
       round: req.params.round,
-      uid: 'test'
+      uid: getUid(req)
     };
     
     var task = service.retrievePicksFor(criteria);
@@ -61,7 +61,7 @@ exports.savePick = function(req, res) {
     var criteria = {
         gameId: req.body.id,
         pick: req.body.pick,
-        uid: 'test'
+        uid: getUid(req)
     };
     
     var task = service.savePick(criteria);
@@ -73,6 +73,33 @@ exports.savePick = function(req, res) {
     task.on('end', function(result) {
        res.send(200);
     });
+};
+
+exports.getLeaderboardForSeason = function(req, res) {
+    var criteria = {
+        seasonId: req.params.seasonId,
+        uid: getUid(req)
+    };
+    
+    var task = service.getLeaderboardForSeason(criteria);
+    
+    task.on('error', function(err) {
+        handleError(err, res);
+    });
+    
+    task.on('end', function(result) {
+       if (result) {
+            res.format({            
+                json: function() { res.send(result); }            
+            });
+        } else {
+            res.send(404, 'Not found');
+        }
+    });
+};
+
+var getUid = function(req) {
+    return 'test';
 };
 
 var handleError = function (err, res) {

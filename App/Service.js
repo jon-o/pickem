@@ -137,6 +137,34 @@ exports.savePick = function(criteria) {
     return eventEmitter;
 };
 
+exports.getLeaderboardForSeason = function(criteria) {
+    console.log(util.format('GetLearderboardForSeason: UID: %s; Season: %d',
+        criteria.uid, criteria.seasonId));
+    
+    var eventEmitter = new EventEmitter();
+    
+    var query = db.executeQuery(sql.getLeaderboardForSeason,
+        [criteria.seasonId]);
+        
+    query.on('error', function(err) {        
+        eventEmitter.emit('error', err);
+    });
+    
+    query.on('end', function(result) {
+        var leaderboard = _.map(result.rows, function(item) {
+            return {
+                position: item.position,
+                correctPicks: item.correctpicks,
+                facebookId: item.facebookid
+            };
+        });
+        
+        eventEmitter.emit('end', leaderboard);        
+    });
+    
+    return eventEmitter;
+};
+
 exports.createUser = function(criteria) {
     console.log(util.format('CreateUser: UID: %s; FacebookId: %d', 
         criteria.uid, criteria.facebookId));

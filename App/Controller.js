@@ -1,6 +1,14 @@
 var service = require("./Service.js");
 
-exports.findPicksForRound = function (req, res) {        
+exports.findPicksForRound = function (req, res) {
+    var validationResponse = validateNumeric(
+        [req.params.seasonId, req.params.round]);
+    if (validationResponse.valid === false) {                
+        return res.format({ 
+            json: function() { res.send(validationResponse)}            
+        });
+    }
+    
     var criteria = {
       seasonId: req.params.seasonId,
       round: req.params.round,
@@ -24,7 +32,14 @@ exports.findPicksForRound = function (req, res) {
     });
 };
 
-exports.findPicksForCurrentRound = function (req, res) {                
+exports.findPicksForCurrentRound = function (req, res) {
+    var validationResponse = validateNumeric([req.params.seasonId]);
+    if (validationResponse.valid === false) {                
+        return res.format({ 
+            json: function() { res.send(validationResponse)}            
+        });
+    }  
+    
     var task = service.retrivePicksForCurrentRound(req.params.seasonId, 'test');
     
     task.on('error', function(err) {
@@ -64,4 +79,19 @@ var handleError = function (err, res) {
     console.log("****ERROR****");
     console.log(err);
     res.send(500, "Oooops...something went wrong.");
+};
+
+var validateNumeric = function (valuesToValidate) {
+    var validationResponse = {
+        valid: true,
+        errorMessage: 'Invalid request' 
+    };
+    
+    valuesToValidate.forEach(function (value) {
+        if (!/^\s*(\+|-)?\d+\s*$/.test(value)) {            
+            validationResponse.valid = false;             
+        }
+    });
+    
+    return validationResponse;
 };

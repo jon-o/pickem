@@ -155,7 +155,8 @@ exports.getLeaderboardForSeason = function(criteria) {
             return {
                 position: item.position,
                 correctPicks: item.correctpicks,
-                facebookId: item.facebookid
+                facebookId: item.facebookid,
+                isUser: item.thirdpartyid == criteria.uid ? true : false
             };
         });
         

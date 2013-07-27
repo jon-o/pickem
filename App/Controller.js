@@ -84,7 +84,7 @@ var handleError = function (err, res) {
 var validateNumeric = function (valuesToValidate) {
     var validationResponse = {
         valid: true,
-        errorMessage: 'Invalid request' 
+        message: 'Invalid request' 
     };
     
     valuesToValidate.forEach(function (value) {

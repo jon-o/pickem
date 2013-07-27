@@ -51,7 +51,8 @@ var buildRetrievePicksResponse = function (results, seasonId) {
     
     if (validResponse) {
         var round = results.picks.rows[0].round;
-        response = { 
+        response = {
+            valid: true,
             round: {
                 games: buildGamesCollection(results.picks.rows),
                 id: round,
@@ -63,7 +64,9 @@ var buildRetrievePicksResponse = function (results, seasonId) {
             }
         };    
     } else {
-        response = { error: 'Invalid seasonId / round' };
+        response = { 
+            valid: false,
+            message: 'Invalid seasonId / round' };
     }
         
     return response;
@@ -153,26 +156,3 @@ exports.createUser = function(criteria) {
     
     return eventEmitter;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

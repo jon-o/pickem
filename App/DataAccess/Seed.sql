@@ -39,11 +39,11 @@ CREATE TABLE games (
 -- Dumping data for table games
 --
 
-INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-16 15:00:00 +00:00', 1, 2, 'DRAW', 1, '1 - 1');
+INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-16 15:00:00 +00:00', 1, 2, 'AWAY', 1, '1 - 2');
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-23 18:00:00 +00:00', 3, 4, 'AWAY', 2, '4 - 0');
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-23 13:30:00 +00:00', 5, 6, 'HOME', 2, '2 - 3');
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2013-02-16 15:00:00 +00:00', 3, 6, 'HOME', 1, '1 - 3');
-INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-23 15:00:00 +00:00', 1, 2, 'DRAW', 5, '0 - 0');
+INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-23 15:00:00 +00:00', 1, 2, NULL, 5, NULL);
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-23 18:00:00 +00:00', 3, 4, NULL, 5, NULL);
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-23 13:30:00 +00:00', 5, 6, NULL, 5, NULL);
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-24 15:00:00 +00:00', 7, 8, NULL, 5, NULL);
@@ -91,14 +91,16 @@ CREATE TABLE picks (
 -- Dumping data for table picks
 --
 
-INSERT INTO picks VALUES(1, 1, 'DRAW');
-INSERT INTO picks VALUES(2, 1, 'DRAW');
+INSERT INTO picks VALUES(1, 1, 'AWAY');
+INSERT INTO picks VALUES(2, 1, 'AWAY');
 INSERT INTO picks VALUES(1, 7, 'DRAW');
 INSERT INTO picks VALUES(1, 2, 'AWAY');
 INSERT INTO picks VALUES(1, 5, 'DRAW');
 INSERT INTO picks VALUES(1, 6, 'AWAY');
 INSERT INTO picks VALUES(1, 9, 'DRAW');
 INSERT INTO picks VALUES(1, 8, 'DRAW');
+INSERT INTO picks VALUES(1, 4, 'HOME');
+INSERT INTO picks VALUES(1, 3, 'HOME');
 -- --------------------------------------------------------
 
 --

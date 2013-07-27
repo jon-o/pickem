@@ -206,6 +206,7 @@ CREATE TABLE users (
   Id serial NOT NULL,
   ThirdPartyId varchar(30) NOT NULL,
   FacebookId integer NOT NULL,
+  ShowInLeaderboard smallint NOT NULL,
   PRIMARY KEY (Id)
 );
 
@@ -213,6 +214,6 @@ CREATE TABLE users (
 -- Dumping data for table users
 --
 
-INSERT INTO users (ThirdPartyId, FacebookId) VALUES('test', 1000000);
-INSERT INTO users (ThirdPartyId, FacebookId) VALUES('test2', 2000000);
-INSERT INTO users (ThirdPartyId, FacebookId) VALUES('test3', 3000000);
+INSERT INTO users (ThirdPartyId, FacebookId, ShowInLeaderboard) VALUES('test', 1000000, 1);
+INSERT INTO users (ThirdPartyId, FacebookId, ShowInLeaderboard) VALUES('test2', 2000000, 1);
+INSERT INTO users (ThirdPartyId, FacebookId, ShowInLeaderboard) VALUES('test3', 3000000, 0);

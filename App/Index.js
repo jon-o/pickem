@@ -46,9 +46,9 @@ app.get('/', function(req, res) {
     res.redirect('/index.html');
 });
 
+//*** API ***
 app.get('/api/picks/season/:seasonId/round/:round', controller.findPicksForRound);
 app.get('/api/picks/season/:seasonId', controller.findPicksForCurrentRound);
-
 app.post('/api/picks', controller.savePick);
 
 //*** ADMIN ***

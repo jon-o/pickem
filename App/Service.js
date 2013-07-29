@@ -152,11 +152,18 @@ exports.getLeaderboardForSeason = function(criteria) {
     
     query.on('end', function(result) {
         var leaderboard = _.map(result.rows, function(item) {
+            var isUser = item.thirdpartyid == criteria.uid ? true : false;
+            
+            var facebookId = item.facebookid;
+            if (!item.showinleaderboard && !isUser) {
+                facebookId = null;
+            }
+            
             return {
                 position: item.position,
                 correctPicks: item.correctpicks,
-                facebookId: item.facebookid,
-                isUser: item.thirdpartyid == criteria.uid ? true : false
+                facebookId: facebookId,
+                isUser: isUser
             };
         });
         
@@ -187,7 +194,6 @@ exports.createUser = function(criteria) {
 };
 
 exports.updateUser = function(criteria) {
-    console.log(criteria.showInLeaderboard.toString());
     var showInLeaderboard = criteria.showInLeaderboard === 'true' ? 1 : 0;
     
     console.log(util.format('UpdateUser: UID: %s; ShowInLeaderboard: %d', 

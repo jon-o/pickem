@@ -61,9 +61,10 @@ exports.updateUser = util.format('%s %s %s',
 'SET showinleaderboard = $2',
 'WHERE thirdpartyid = $1');
 
-exports.getLeaderboardForSeason = util.format('%s %s %s %s %s %s %s %s',
+exports.getLeaderboardForSeason = util.format('%s %s %s %s %s %s %s %s %s',
 'SELECT row_number() OVER(ORDER BY COUNT(u.Id) DESC) AS position,',
-'    COUNT(u.Id) AS correctpicks, u.thirdpartyid, u.facebookId',
+'    COUNT(u.Id) AS correctpicks, u.thirdpartyid, u.facebookid,',
+'    u.showinleaderboard',
 'FROM picks AS p',
 'INNER JOIN games AS g on g.id = p.gameId',
 'INNER JOIN rounds AS r on r.id = g.roundId',

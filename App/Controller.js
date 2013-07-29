@@ -75,6 +75,23 @@ exports.savePick = function(req, res) {
     });
 };
 
+exports.updateShowInLeaderboardSetting = function(req, res) {
+    var criteria = {
+        uid: getUid(req),
+        showInLeaderboard: req.body.showInLeaderboard
+    };
+    
+    var task = service.updateUser(criteria);
+    
+    task.on('error', function(err) {
+        handleError(err, res);
+    });
+    
+    task.on('end', function(result) {
+        res.send(200);
+    });
+};
+
 exports.getLeaderboardForSeason = function(req, res) {
     var criteria = {
         seasonId: req.params.seasonId,

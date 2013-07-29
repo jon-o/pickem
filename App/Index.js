@@ -51,6 +51,7 @@ app.get('/api/picks/season/:seasonId/round/:round', controller.findPicksForRound
 app.get('/api/picks/season/:seasonId', controller.findPicksForCurrentRound);
 app.post('/api/picks', controller.savePick);
 app.get('/api/leaderboard/season/:seasonId', controller.getLeaderboardForSeason);
+app.post('/api/user/showInLeaderboard', controller.updateShowInLeaderboardSetting);
 
 //*** ADMIN ***
 app.get('/admin', auth, adminController.showSeasons);

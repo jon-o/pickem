@@ -185,3 +185,26 @@ exports.createUser = function(criteria) {
     
     return eventEmitter;
 };
+
+exports.updateUser = function(criteria) {
+    console.log(criteria.showInLeaderboard.toString());
+    var showInLeaderboard = criteria.showInLeaderboard === 'true' ? 1 : 0;
+    
+    console.log(util.format('UpdateUser: UID: %s; ShowInLeaderboard: %d', 
+        criteria.uid, showInLeaderboard));
+        
+    var eventEmitter = new EventEmitter();
+    
+    var query = db.executeQuery(sql.updateUser,
+        [criteria.uid, showInLeaderboard]);
+
+    query.on('error', function(err) {        
+        eventEmitter.emit('error', err);
+    });
+    
+    query.on('end', function(result) {
+        eventEmitter.emit('end', result);        
+    });
+    
+    return eventEmitter;
+};

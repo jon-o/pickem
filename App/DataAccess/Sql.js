@@ -56,6 +56,11 @@ exports.createUser = util.format('%s %s',
 'INSERT INTO users (thirdpartyid, facebookid, showinleaderboard) SELECT $1, $2, 0',
 'WHERE NOT EXISTS (SELECT 1 FROM users WHERE thirdpartyid = CAST($1 AS varchar(30)))');
 
+exports.updateUser = util.format('%s %s %s',
+'UPDATE users',
+'SET showinleaderboard = $2',
+'WHERE thirdpartyid = $1');
+
 exports.getLeaderboardForSeason = util.format('%s %s %s %s %s %s %s %s',
 'SELECT row_number() OVER(ORDER BY COUNT(u.Id) DESC) AS position,',
 '    COUNT(u.Id) AS correctpicks, u.thirdpartyid, u.facebookId',

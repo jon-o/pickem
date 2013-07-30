@@ -1,3 +1,15 @@
 <div class="row">
     <h1>This is the leaderboard partial</h1>
+    
+    <div class="row span6" ng-controller="LeaderboardController">
+        <table class="table table-striped">
+            <tbody>
+                <tr ng-repeat="entry in leaderboard">
+                    <td class="span1">{{entry.position}}</td>
+                    <td class="span4">{{entry.facebookId}}</td>
+                    <td class="span1">{{entry.correctPicks}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -8,6 +8,7 @@ pickem.controller('GamesController',
             if(response.valid) {
                 $scope.games = response.round.games;
                 $scope.roundTitle = response.season.name + ' ' + response.round.text;
+                $scope.errorMessage = '';
             } else {
                 $scope.errorMessage = handleError(response.message);
             }

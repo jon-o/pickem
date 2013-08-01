@@ -154,15 +154,18 @@ exports.getLeaderboardForSeason = function(criteria) {
         var leaderboard = _.map(result.rows, function(item) {
             var isUser = item.thirdpartyid == criteria.uid ? true : false;
             
-            var facebookId = item.facebookid;
-            if (!item.showinleaderboard && !isUser) {
-                facebookId = null;
+            var imageUrl = "https://fbstatic-a.akamaihd.net/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif";
+            var name = "Private";
+            if (item.showinleaderboard || isUser) {
+                imageUrl = util.format("https://graph.facebook.com/%s/picture", item.facebookid);
+                name = "Someone's name";
             }
             
             return {
                 position: item.position,
                 correctPicks: item.correctpicks,
-                facebookId: facebookId,
+                imageUrl: imageUrl,
+                name: name,
                 isUser: isUser
             };
         });
@@ -174,7 +177,7 @@ exports.getLeaderboardForSeason = function(criteria) {
 };
 
 exports.createUser = function(criteria) {
-    console.log(util.format('CreateUser: UID: %s; FacebookId: %d', 
+    console.log(util.format('CreateUser: UID: %s; FacebookId: %s', 
         criteria.uid, criteria.facebookId));
     
     var eventEmitter = new EventEmitter();

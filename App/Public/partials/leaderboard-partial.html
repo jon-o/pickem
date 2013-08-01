@@ -6,7 +6,10 @@
             <tbody>
                 <tr ng-repeat="entry in leaderboard">
                     <td class="span1">{{entry.position}}</td>
-                    <td class="span4">{{entry.facebookId}}</td>
+                    <td class="span4">
+                        <img ng-src="{{entry.imageUrl}}" alt="{{entry.name}}" />
+                        <span>{{entry.name}}</span>
+                    </td>
                     <td class="span1">{{entry.correctPicks}}</td>
                 </tr>
             </tbody>

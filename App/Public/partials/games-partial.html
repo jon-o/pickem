@@ -2,9 +2,10 @@
     <h1>This is the games partial</h1>
     
     <div ng-controller="GamesController">
-        <span>{{picks.season.name}} - {{picks.round.text}}</span>        
+        <p class="text-error">{{errorMessage}}</p>
+        <span>{{roundTitle}}</span>        
         
-        <li ng-repeat="game in selectedRound.round.games">
+        <li ng-repeat="game in games">
             <div class="well">
                 <span>{{game.home}} vs {{game.away}}</span>
             </div>            

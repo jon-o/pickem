@@ -177,13 +177,14 @@ exports.getLeaderboardForSeason = function(criteria) {
 };
 
 exports.createUser = function(criteria) {
-    console.log(util.format('CreateUser: UID: %s; FacebookId: %s', 
-        criteria.uid, criteria.facebookId));
+    console.log(util.format(
+        'CreateUser: UID: %s; FacebookId: %s; FacebookUsername: %s; Name: %s', 
+        criteria.uid, criteria.facebookId, criteria.facebookUsername, criteria.name));
     
     var eventEmitter = new EventEmitter();
 
     var query = db.executeQuery(sql.createUser,
-        [criteria.uid, criteria.facebookId]);
+        [criteria.uid, criteria.facebookId, criteria.facebookUsername, criteria.name]);
 
     query.on('error', function(err) {        
         eventEmitter.emit('error', err);

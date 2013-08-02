@@ -53,7 +53,7 @@ exports.savePick = util.format('%s %s %s %s',
 'WHERE NOT EXISTS (SELECT 1 FROM picks WHERE userid = (SELECT id FROM users WHERE thirdpartyid = $1) AND gameid = $2);');
 
 exports.createUser = util.format('%s %s',
-'INSERT INTO users (thirdpartyid, facebookid, showinleaderboard) SELECT $1, $2, 0',
+'INSERT INTO users (thirdpartyid, facebookid, facebookusername, name, showinleaderboard) SELECT $1, $2, $3, $4, 0',
 'WHERE NOT EXISTS (SELECT 1 FROM users WHERE thirdpartyid = CAST($1 AS varchar(30)))');
 
 exports.updateUser = util.format('%s %s %s',

@@ -158,7 +158,7 @@ exports.getLeaderboardForSeason = function(criteria) {
             var name = "Private";
             if (item.showinleaderboard || isUser) {
                 imageUrl = util.format("https://graph.facebook.com/%s/picture", item.facebookid);
-                name = "Someone's name";
+                name = item.name;
             }
             
             return {

@@ -128,12 +128,13 @@ var handleError = function (err, res) {
 var validateNumeric = function (valuesToValidate) {
     var validationResponse = {
         valid: true,
-        message: 'Invalid request' 
+        message: '' 
     };
     
     valuesToValidate.forEach(function (value) {
         if (!/^\s*(\+|-)?\d+\s*$/.test(value)) {            
-            validationResponse.valid = false;             
+            validationResponse.valid = false; 
+            validationResponse.message = 'Invalid request';
         }
     });
     

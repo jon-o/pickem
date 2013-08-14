@@ -15,7 +15,21 @@ pickem.factory('pickemService', function($q, $http) {
                     });
                     
                 return deferred.promise;
-            }  
+            },
+            
+            getRoundGames: function (apiUrl) {
+                var deferred = $q.defer();
+                
+                $http({method: 'GET', url: apiUrl})
+                    .success(function (data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function (data, status) {
+                       deferred.reject(status); 
+                    });
+                    
+                return deferred.promise;
+            }
         },        
         
         leaderboard: {

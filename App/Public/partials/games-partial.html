@@ -3,12 +3,16 @@
     
     <div ng-controller="GamesController">
         <p class="text-error">{{errorMessage}}</p>
+        <div>
+            <button class="btn" ng-click="previousRound()">Previous Round</button>
+            <button class="btn" ng-click="nextRound()">Next Round</button> 
+        </div>
         <span>{{roundTitle}}</span>        
         
         <li ng-repeat="game in games">
             <div class="well">
                 <span>{{game.home}} vs {{game.away}}</span>
             </div>            
-        </li>
+        </li>       
     </div>
 </div>

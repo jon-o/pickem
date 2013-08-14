@@ -20,11 +20,13 @@ pickem.controller('GamesController',
         };
         
         var performGetRoundGames = function (getRoundGamesUri) {
-            $scope.selectedRound = pickemService.rounds.getRoundGames(getRoundGamesUri);
-            
-            $scope.selectedRound.then(function(response) {
-                processRoundResponse(response);
-            });
+            if (getRoundGamesUri !== null) {
+                $scope.selectedRound = pickemService.rounds.getRoundGames(getRoundGamesUri);
+                
+                $scope.selectedRound.then(function(response) {
+                    processRoundResponse(response);
+                });
+            }
         };
         
         var processRoundResponse = function (response) {

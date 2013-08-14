@@ -2,7 +2,7 @@
 
 pickem.controller('GamesController', 
     function GamesController($scope, pickemService) {            
-        $scope.selectedRound = pickemService.getCurrentRoundGames();             
+        $scope.selectedRound = pickemService.rounds.getCurrentRoundGames();             
         
         $scope.selectedRound.then(function(response) {
             if(response.valid) {
@@ -13,7 +13,6 @@ pickem.controller('GamesController',
                 $scope.errorMessage = handleError(response.message);
             }
         });
-        
     }
 );
 

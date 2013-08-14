@@ -3,10 +3,10 @@
 pickem.factory('pickemService', function($q, $http) {
     return {
         rounds: {
-            getCurrentRoundGames: function () {
+            getCurrentRoundGames: function (seasonId) {
                 var deferred = $q.defer();
                 
-                $http({method: 'GET', url: '/api/picks/season/1'})
+                $http({method: 'GET', url: '/api/picks/season/' + seasonId})
                     .success(function (data) {
                         deferred.resolve(data);
                     })

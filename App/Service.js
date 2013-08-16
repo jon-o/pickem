@@ -143,15 +143,16 @@ exports.getLeaderboardForSeason = function(criteria) {
     
     var eventEmitter = new EventEmitter();
     
-    var query = db.executeQuery(sql.getLeaderboardForSeason,
-        [criteria.seasonId]);
+    var query = db.executeQueries([
+        { query: sql.getLeaderboardForSeason, params: [criteria.seasonId], name: 'leaderboard'},        
+        { query: sql.getUser, params: [criteria.uid], name: 'user'}]);
         
     query.on('error', function(err) {        
         eventEmitter.emit('error', err);
     });
     
     query.on('end', function(result) {
-        var leaderboard = _.map(result.rows, function(item) {
+        var leaderboard = _.map(result.leaderboard.rows, function(item) {
             var isUser = item.thirdpartyid == criteria.uid ? true : false;
             
             var imageUrl = "https://fbstatic-a.akamaihd.net/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif";
@@ -170,7 +171,11 @@ exports.getLeaderboardForSeason = function(criteria) {
             };
         });
         
-        eventEmitter.emit('end', leaderboard);        
+        var showInLeaderboard = result.user.rows[0].showinleaderboard = 0 ? false : true;
+        
+        eventEmitter.emit('end', { 
+            leaderboard: leaderboard, 
+            showInLeaderboard: showInLeaderboard });        
     });
     
     return eventEmitter;

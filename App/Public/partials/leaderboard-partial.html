@@ -1,11 +1,9 @@
-<div class="row span9">
-    <h1>This is the leaderboard partial</h1>
-</div>
+<div ng-controller="LeaderboardController">
+    <h1 class="row span9">This is the leaderboard partial</h1>
 
-<div class="row span6" ng-controller="LeaderboardController">
-    <table class="table table-striped">
+    <table class="table table-striped row span6">
         <tbody>
-            <tr ng-repeat="entry in leaderboard">
+            <tr ng-repeat="entry in model.leaderboard">
                 <td class="span1">{{entry.position}}</td>
                 <td class="span4">
                     <img ng-src="{{entry.imageUrl}}" alt="{{entry.name}}" />
@@ -15,4 +13,9 @@
             </tr>
         </tbody>
     </table>
+        
+    <div class="row span6">
+        <label for="showInLeaderboard">Show in leaderboard:</label>
+        <input id="showInLeaderboard" name="showInLeaderboard" ng-model="model.showInLeaderboard" type="checkbox" />
+    </div>
 </div>

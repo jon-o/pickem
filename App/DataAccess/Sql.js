@@ -61,6 +61,11 @@ exports.updateUser = util.format('%s %s %s',
 'SET showinleaderboard = $2',
 'WHERE thirdpartyid = $1');
 
+exports.getUser = util.format('%s %s %s',
+'SELECT *',
+'FROM users',
+'WHERE thirdpartyid = $1');
+
 exports.getLeaderboardForSeason = util.format('%s %s %s %s %s %s %s %s %s',
 'SELECT row_number() OVER(ORDER BY COUNT(u.Id) DESC) AS position,',
 '    COUNT(u.Id) AS correctpicks, u.thirdpartyid, u.facebookid,',

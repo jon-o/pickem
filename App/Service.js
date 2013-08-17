@@ -170,8 +170,8 @@ exports.getLeaderboardForSeason = function(criteria) {
                 isUser: isUser
             };
         });
-        
-        var showInLeaderboard = result.user.rows[0].showinleaderboard = 0 ? false : true;
+
+        var showInLeaderboard = result.user.rows[0].showinleaderboard === 0 ? false : true;
         
         eventEmitter.emit('end', { 
             leaderboard: leaderboard, 

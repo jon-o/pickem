@@ -4,13 +4,13 @@ pickem.controller('LeaderboardController',
     function LeaderboardController($scope, pickemService) {
         pickemService.leaderboard.getForSeason(1)
             .then(function(data) {
-                $scope.setting = data.showInleaderboard;
+                $scope.showInLeaderboard = data.showInLeaderboard;
                 $scope.leaderboard = data.leaderboard;
-            })
+            });
         
-        $scope.updateSetting = function() {
+        $scope.updateshowInLeaderboard = function() {
             pickemService.leaderboard.updateShowInLeaderboardSetting(
-                $scope.setting);
+                $scope.showInLeaderboard);
         };
     }
 );

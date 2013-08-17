@@ -55,7 +55,7 @@ pickem.factory('pickemService', function($q, $http) {
                 $http({
                     method: 'POST',
                     url: '/api/user/showInLeaderboard',
-                    data: { showInLeaderboard: value }
+                    data: { 'showInLeaderboard': value }
                 })
                 .success(function(data) {
                     alert(data);

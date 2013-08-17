@@ -203,7 +203,7 @@ exports.createUser = function(criteria) {
 };
 
 exports.updateUser = function(criteria) {
-    var showInLeaderboard = criteria.showInLeaderboard === 'true' ? 1 : 0;
+    var showInLeaderboard = criteria.showInLeaderboard ? 1 : 0;
     
     console.log(util.format('UpdateUser: UID: %s; ShowInLeaderboard: %d', 
         criteria.uid, showInLeaderboard));

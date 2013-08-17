@@ -49,9 +49,7 @@ pickem.factory('pickemService', function($q, $http) {
                 return deferred.promise;
             },
             
-            updateShowInLeaderboardSetting: function(value) {
-                alert(value);
-                
+            updateShowInLeaderboardSetting: function(value) {        
                 $http({
                     method: 'POST',
                     url: '/api/user/showInLeaderboard',

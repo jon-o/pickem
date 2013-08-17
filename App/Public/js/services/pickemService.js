@@ -58,10 +58,11 @@ pickem.factory('pickemService', function($q, $http) {
                     data: { 'showInLeaderboard': value }
                 })
                 .success(function(data) {
-                    alert(data);
+                    //Do nothing
                 })
                 .error(function(data, status) {
-                    alert(status);
+                    //Need to handle this
+                    alert('Unable to update at this time');
                 });
             }
         }

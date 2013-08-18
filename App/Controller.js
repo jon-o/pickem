@@ -40,7 +40,7 @@ exports.findPicksForCurrentRound = function (req, res) {
         });
     }  
     
-    var task = service.retrivePicksForCurrentRound(req.params.seasonId, 'test');
+    var task = service.retrivePicksForCurrentRound(req.params.seasonId, getUid(req));
     
     task.on('error', function(err) {
         handleError(err, res);        

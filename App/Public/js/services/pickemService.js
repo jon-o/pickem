@@ -47,6 +47,21 @@ pickem.factory('pickemService', function($q, $http) {
                 });
                 
                 return deferred.promise;
+            },
+            
+            updateShowInLeaderboardSetting: function(value) {        
+                $http({
+                    method: 'POST',
+                    url: '/api/user/showInLeaderboard',
+                    data: { 'showInLeaderboard': value }
+                })
+                .success(function(data) {
+                    //Do nothing
+                })
+                .error(function(data, status) {
+                    //Need to handle this
+                    alert('Unable to update at this time');
+                });
             }
         }
     };

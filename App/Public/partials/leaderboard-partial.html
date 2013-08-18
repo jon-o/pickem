@@ -1,8 +1,7 @@
-<div class="row span9">
-    <h1>This is the leaderboard partial</h1>
-</div>
+<div ng-controller="LeaderboardController">
+    <h1 class="row span6">This is the leaderboard partial</h1>
 
-<div class="row span6" ng-controller="LeaderboardController">
+    <div class="row span6">
     <table class="table table-striped">
         <tbody>
             <tr ng-repeat="entry in leaderboard">
@@ -15,4 +14,11 @@
             </tr>
         </tbody>
     </table>
+    </div>
+        
+    <div class="row span3">
+        <label for="showInLeaderboard">Show in leaderboard:</label>
+        <input id="showInLeaderboard" name="showInLeaderboard" type="checkbox"
+            ng-model="showInLeaderboard" ng-change="updateshowInLeaderboard()" />
+    </div>
 </div>

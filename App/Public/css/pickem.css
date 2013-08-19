@@ -6,3 +6,24 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none;
 }
+
+.no-list-style-type {
+    list-style-type: none;
+}
+
+.pick-game {
+    margin: 5px;
+    display: inline-block; 
+    width: auto; 
+    border: 1px solid black;
+}
+
+.pick-tile {
+    width: 150px;
+    height: 150px;
+    margin: 5px 10px;
+    background: #00A300;
+    display: inline-block;
+    color: white;
+    font-weight: bold ;
+}

@@ -10,12 +10,22 @@
         <span>{{roundTitle}}</span>        
         
         <li ng-repeat="game in games" class="no-list-style-type">
-            <div class="pick-game">  
-            <div >
-                <button class="pick-tile">{{game.home}}</button>
-                <button class="pick-tile">Draw</button>
-                <button class="pick-tile">{{game.away}}</button>
-            </div>
+            <div class="pick-game">                  
+                <button class="btn btn-pick" 
+                ng-class="{'active':game.pick == 'HOME'}"
+                data-ng-disabled="game.pick != 'HOME' && game.hasBegun">
+                    {{game.home}}
+                </button>
+                <button class="btn btn-pick" 
+                ng-class="{'active':game.pick == 'DRAW'}"
+                data-ng-disabled="game.pick != 'DRAW' && game.hasBegun">
+                    Draw
+                </button>
+                <button class="btn btn-pick" 
+                ng-class="{'active':game.pick == 'AWAY'}"
+                data-ng-disabled="game.pick != 'AWAY' && game.hasBegun">
+                    {{game.away}}                    
+                </button>                
             </div>            
         </li>       
     </div>

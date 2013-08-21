@@ -24,6 +24,15 @@ pickem.factory('facebookService', function(facebook, $q, $rootScope) {
         });
     };
     
+    var saveTokenInfo = function(response) {
+        var tokenExpiration = new Date();
+        tokenExpiration.setSeconds(tokenExpiration.getSeconds() + 
+            response.authResponse.expiresIn);
+            
+        $rootScope.tokenExpiration = tokenExpiration;
+        $rootScope.accessToken = response.authResponse.accessToken;
+    };
+    
     var getUserInfo = function(deferred) {
         facebook.api('/me?fields=id,third_party_id,username,name', function(response) {
             resolve(null, response, deferred);
@@ -36,15 +45,17 @@ pickem.factory('facebookService', function(facebook, $q, $rootScope) {
             
             facebook.getLoginStatus(function(response) {
                 if (response.status == 'connected') {
+                    saveTokenInfo(response);
                     getUserInfo(deferred);
                } else if (response.status == 'not_authorized') {
-                   alert('You did not authorize the app');
+                   resolve(response, null, deferred);
                } else {
                    facebook.login(function(response) {
                        if (response.authResponse) {
+                            saveTokenInfo(response);
                             getUserInfo(deferred);
                        } else {
-                            resolve(response.error, null, deferred);
+                            resolve(response, null, deferred);
                        }
                    });
                }

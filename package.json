@@ -13,15 +13,15 @@
     "url": "https://github.com/jon-o/pickem.git"
   },
   "dependencies": {
-    "express": "3.0",
-    "jade": "0.33.0",
-    "pg": "2.0.0",
-    "async": "0.2.9",
-    "underscore": "1.5.1",
+    "express": ">=3.0",
+    "jade": ">=0.33.0",
+    "pg": ">=2.0.0",
+    "async": ">=0.2.9",
+    "underscore": ">=1.5.1",
     "nodetime": ">=0.8.0"
   },
   "engines": {
-    "node": "0.8.x",
+    "node": "0.10.x",
     "npm": "1.2.x"
   }
 }

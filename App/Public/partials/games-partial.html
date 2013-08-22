@@ -13,17 +13,21 @@
             <div class="pick-game">                  
                 <button class="btn btn-pick" 
                 ng-class="{'active':game.pick == 'HOME'}"
-                data-ng-disabled="game.pick != 'HOME' && game.hasBegun">
+                ng-disabled="game.pick != 'HOME' && game.hasBegun"
+                ng-click="sendPick(game, 'HOME')">
                     {{game.home}}
                 </button>
                 <button class="btn btn-pick" 
                 ng-class="{'active':game.pick == 'DRAW'}"
-                data-ng-disabled="game.pick != 'DRAW' && game.hasBegun">
+                ng-disabled="game.pick != 'DRAW' && game.hasBegun"
+                ng-click="sendPick(game, 'DRAW')"
+                ng-show="game.allowDraw">
                     Draw
                 </button>
                 <button class="btn btn-pick" 
                 ng-class="{'active':game.pick == 'AWAY'}"
-                data-ng-disabled="game.pick != 'AWAY' && game.hasBegun">
+                data-ng-disabled="game.pick != 'AWAY' && game.hasBegun"
+                ng-click="sendPick(game, 'AWAY')">
                     {{game.away}}                    
                 </button>                
             </div>            

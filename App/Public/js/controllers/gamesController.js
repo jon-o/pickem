@@ -19,6 +19,10 @@ pickem.controller('GamesController',
             performGetRoundGames(previousRoundUri);
         };
         
+        $scope.sendPick = function (game, pick) {
+            alert('You picked ' + pick + ' for ' + game.id + " (" + game.home + ")");
+        };
+        
         var performGetRoundGames = function (getRoundGamesUri) {
             if (getRoundGamesUri !== null) {
                 $scope.selectedRound = pickemService.rounds.getRoundGames(getRoundGamesUri);

@@ -202,7 +202,7 @@ exports.createUser = function(criteria) {
     return eventEmitter;
 };
 
-exports.updateUser = function(criteria) {
+exports.updateShowInLeaderboardSetting = function(criteria) {
     var showInLeaderboard = criteria.showInLeaderboard ? 1 : 0;
     
     console.log(util.format('UpdateUser: UID: %s; ShowInLeaderboard: %d', 

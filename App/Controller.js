@@ -81,7 +81,7 @@ exports.updateShowInLeaderboardSetting = function(req, res) {
         showInLeaderboard: req.body.showInLeaderboard
     };
     
-    var task = service.updateUser(criteria);
+    var task = service.updateShowInLeaderboardSetting(criteria);
     
     task.on('error', function(err) {
         handleError(err, res);

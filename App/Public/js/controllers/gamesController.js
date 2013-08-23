@@ -20,7 +20,10 @@ pickem.controller('GamesController',
         };
         
         $scope.sendPick = function (game, pick) {
-            alert('You picked ' + pick + ' for ' + game.id + " (" + game.home + ")");
+            if (pick != game.pick) {
+                game.pick = pick;
+                pickemService.pick.savePick(game);                
+            }            
         };
         
         var performGetRoundGames = function (getRoundGamesUri) {

@@ -63,6 +63,25 @@ pickem.factory('pickemService', function($q, $http) {
                     alert('Unable to update at this time');
                 });
             }
+        },
+        
+        pick : {
+            savePick: function(game) {                                
+                $http({
+                    method: 'POST',
+                    url: '/api/picks',
+                    data: { 
+                        'id': game.id,
+                        'pick': game.pick
+                    }
+                })
+                .success(function(data) {
+                    alert('Pick saved!');
+                })
+                .error(function(data, status) {
+                    alert('Pick not saved!');
+                });
+            }
         }
     };
 });

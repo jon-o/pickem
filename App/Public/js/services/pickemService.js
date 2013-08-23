@@ -66,7 +66,9 @@ pickem.factory('pickemService', function($q, $http) {
         },
         
         pick : {
-            savePick: function(game) {                                
+            savePick: function(game) {
+                var deferred = $q.defer();
+                
                 $http({
                     method: 'POST',
                     url: '/api/picks',
@@ -75,12 +77,14 @@ pickem.factory('pickemService', function($q, $http) {
                         'pick': game.pick
                     }
                 })
-                .success(function(data) {
-                    alert('Pick saved!');
+                .success(function(status) {
+                    deferred.resolve(status);
                 })
                 .error(function(data, status) {
-                    alert('Pick not saved!');
+                    deferred.reject(status);
                 });
+                
+                return deferred.promise;
             }
         }
     };

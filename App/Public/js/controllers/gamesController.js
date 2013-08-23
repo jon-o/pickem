@@ -3,7 +3,7 @@
 pickem.controller('GamesController', 
     function GamesController($scope, pickemService) {
         var previousRoundUri;
-        var nextRoundUri;            
+        var nextRoundUri;          
         
         $scope.selectedRound = pickemService.rounds.getCurrentRoundGames(1);             
         
@@ -22,9 +22,14 @@ pickem.controller('GamesController',
         $scope.sendPick = function (game, pick) {
             if (pick != game.pick) {
                 game.pick = pick;
-                pickemService.pick.savePick(game);                
+                pickemService.pick.savePick(game)
+                    .then(function() {
+                    console.log('Pick saved: ' + game.home + ' vs ' + game.away); 
+                }, function() {
+                    console.log('Pick not saved: ' + game.home + ' vs ' + game.away);
+                });
             }            
-        };
+        };            
         
         var performGetRoundGames = function (getRoundGamesUri) {
             if (getRoundGamesUri !== null) {

@@ -48,6 +48,9 @@ INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) 
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-23 13:30:00 +00:00', 5, 6, NULL, 5, NULL);
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-24 15:00:00 +00:00', 7, 8, NULL, 5, NULL);
 INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-24 12:00:00 +00:00', 9, 10, NULL, 5, NULL);
+INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-15 12:00:00 +00:00', 1, 5, NULL, 3, NULL);
+INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-02-25 18:00:00 +00:00', 5, 1, NULL, 4, NULL);
+INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) VALUES('2014-12-24 15:00:00 +00:00', 2, 4, NULL, 4, NULL);
 
 -- --------------------------------------------------------
 

@@ -23,10 +23,10 @@ pickem.controller('GamesController',
             if (pick != game.pick) {
                 game.pick = pick;
                 pickemService.pick.savePick(game)
-                    .then(function() {
-                    console.log('Pick saved: ' + game.home + ' vs ' + game.away); 
-                }, function() {
-                    console.log('Pick not saved: ' + game.home + ' vs ' + game.away);
+                    .then(function() {                    
+                    toastr.success(game.home + ' vs ' + game.away, 'Pick Saved: ' + game.pick.toUpperCase());
+                }, function() {                    
+                    toastr.error(game.home + ' vs ' + game.away, 'Pick not saved: ' + game.pick.toUpperCase());
                 });
             }            
         };            

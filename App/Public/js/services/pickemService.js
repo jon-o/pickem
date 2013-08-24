@@ -66,15 +66,15 @@ pickem.factory('pickemService', function($q, $http) {
         },
         
         pick : {
-            savePick: function(game) {
+            savePick: function(id, pick) {
                 var deferred = $q.defer();
                 
                 $http({
                     method: 'POST',
                     url: '/api/picks',
                     data: { 
-                        'id': game.id,
-                        'pick': game.pick
+                        'id': id,
+                        'pick': pick
                     }
                 })
                 .success(function(status) {

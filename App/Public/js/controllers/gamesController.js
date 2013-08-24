@@ -21,12 +21,15 @@ pickem.controller('GamesController',
         
         $scope.sendPick = function (game, pick) {
             if (pick != game.pick) {
+                var previousPick = game.pick;
                 game.pick = pick;
-                pickemService.pick.savePick(game)
-                    .then(function() {                    
-                    toastr.success(game.home + ' vs ' + game.away, 'Pick Saved: ' + game.pick.toUpperCase());
+                
+                pickemService.pick.savePick(game.id, pick)
+                    .then(function() {                        
+                        toastr.success(game.home + ' vs ' + game.away, 'Pick Saved: ' + game.pick.toUpperCase());                        
                 }, function() {                    
-                    toastr.error(game.home + ' vs ' + game.away, 'Pick not saved: ' + game.pick.toUpperCase());
+                        toastr.error(game.home + ' vs ' + game.away, 'Pick not saved: ' + game.pick.toUpperCase());
+                        game.pick = previousPick;
                 });
             }            
         };            

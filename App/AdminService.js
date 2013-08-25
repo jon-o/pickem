@@ -54,14 +54,18 @@ exports.getGames = function(criteria) {
 exports.updateGames = function(criteria) {
     var eventEmitter = new EventEmitter();
     
-    var params = _.map(criteria.games, function(game) {
+    var updates = _.map(criteria.games, function(game) {
         var result = game.result === '' ? null : game.result;
         var score = game.score === '' ? null : game.score;
         
-        return [result, score, game.id];
+        return {
+            query: sql.updateGame,
+            params: [result, score, game.id],
+            name: game.id.toString()
+        };
     });
     
-    var query = db.executeMassQuery(sql.updateGame, params);
+    var query = db.executeQueries(updates);
 
     query.on('error', function(err) {        
         eventEmitter.emit('error', err);

@@ -9,7 +9,7 @@ exports.showSeasons = function(req, res) {
     });
     
     task.on('end', function(result) {
-       res.render('seasons', { seasons: result.rows }) ;
+       res.render('seasons', { seasons: result }) ;
     });
 };
 
@@ -26,7 +26,7 @@ exports.showRounds = function(req, res) {
     
     task.on('end', function(result) {
         res.render('rounds', { 
-            rounds: result.rows, 
+            rounds: result, 
             seasonId: req.params.seasonId });
     });
 };
@@ -44,7 +44,7 @@ exports.showGames = function(req, res) {
     
     task.on('end', function(result) {
         res.render('games', { 
-            games: result.rows, 
+            games: result, 
             seasonId: req.params.seasonId,
             round: req.params.round });
     });

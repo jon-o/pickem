@@ -1,5 +1,5 @@
-var db = require('./DataAccess/Database.js');
-var sql = require('./DataAccess/Sql.js');
+var db = require('./MySqlDataAccess/Database.js');
+var sql = require('./MySqlDataAccess/Sql.js');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
@@ -46,21 +46,21 @@ exports.retrievePicksFor = function(criteria) {
 };
 
 var buildRetrievePicksResponse = function (results, seasonId) {
-    var validResponse = results.picks.rowCount > 0;
+    var validResponse = results.picks.length > 0;
     var response = {};
     
     if (validResponse) {
-        var round = results.picks.rows[0].round;
+        var round = results.picks[0].round;
         response = {
             valid: true,
             round: {
-                games: buildGamesCollection(results.picks.rows),
+                games: buildGamesCollection(results.picks),
                 id: round,
-                text: results.picks.rows[0].roundtext,
-                navigation: getPicksNavigationUri(results.firstLastRounds.rows[0], seasonId, round)
+                text: results.picks[0].roundtext,
+                navigation: getPicksNavigationUri(results.firstLastRounds[0], seasonId, round)
             },
             season : {
-                name: results.picks.rows[0].seasonname
+                name: results.picks[0].seasonname
             }
         };    
     } else {
@@ -123,7 +123,7 @@ exports.savePick = function(criteria) {
     
     var eventEmitter = new EventEmitter();
     
-    var query = db.executeUpsert(sql.savePick, 
+    var query = db.executeQuery(sql.savePick, 
         [criteria.uid, criteria.gameId, criteria.pick]);
 
     query.on('error', function(err) {        
@@ -152,7 +152,7 @@ exports.getLeaderboardForSeason = function(criteria) {
     });
     
     query.on('end', function(result) {
-        var leaderboard = _.map(result.leaderboard.rows, function(item) {
+        var leaderboard = _.map(result.leaderboard, function(item) {
             var isUser = item.thirdpartyid == criteria.uid ? true : false;
             
             var imageUrl = "https://fbstatic-a.akamaihd.net/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif";
@@ -171,7 +171,7 @@ exports.getLeaderboardForSeason = function(criteria) {
             };
         });
 
-        var showInLeaderboard = result.user.rows[0].showinleaderboard === 0 ? false : true;
+        var showInLeaderboard = result.user[0].showinleaderboard === 0 ? false : true;
         
         eventEmitter.emit('end', { 
             leaderboard: leaderboard, 
@@ -181,15 +181,16 @@ exports.getLeaderboardForSeason = function(criteria) {
     return eventEmitter;
 };
 
-exports.createUser = function(criteria) {
+exports.saveUser = function(criteria) {
     console.log(util.format(
-        'CreateUser: UID: %s; FacebookId: %s; FacebookUsername: %s; Name: %s', 
+        'SaveUser: UID: %s; FacebookId: %s; FacebookUsername: %s; Name: %s', 
         criteria.uid, criteria.facebookId, criteria.facebookUsername, criteria.name));
     
     var eventEmitter = new EventEmitter();
 
-    var query = db.executeQuery(sql.createUser,
-        [criteria.uid, criteria.facebookId, criteria.facebookUsername, criteria.name]);
+    var query = db.executeQuery(sql.saveUser,
+        [criteria.uid, criteria.facebookUsername, criteria.facebookId, criteria.name,
+        criteria.uid]);
 
     query.on('error', function(err) {        
         eventEmitter.emit('error', err);
@@ -210,8 +211,8 @@ exports.updateShowInLeaderboardSetting = function(criteria) {
         
     var eventEmitter = new EventEmitter();
     
-    var query = db.executeQuery(sql.updateUser,
-        [criteria.uid, showInLeaderboard]);
+    var query = db.executeQuery(sql.updateShowInLeaderboardSetting,
+        [showInLeaderboard, criteria.uid]);
 
     query.on('error', function(err) {        
         eventEmitter.emit('error', err);

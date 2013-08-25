@@ -1,5 +1,5 @@
-var db = require('./DataAccess/Database.js');
-var sql = require('./DataAccess/Sql.js');
+var db = require('./MySqlDataAccess/Database.js');
+var sql = require('./MySqlDataAccess/Sql.js');
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
 
@@ -58,7 +58,7 @@ exports.updateGames = function(criteria) {
         var result = game.result === '' ? null : game.result;
         var score = game.score === '' ? null : game.score;
         
-        return [game.id, result, score];
+        return [result, score, game.id];
     });
     
     var query = db.executeMassQuery(sql.updateGame, params);

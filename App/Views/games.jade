@@ -26,7 +26,7 @@ block content
                     tbody
                         each game, i in games
                             tr
-                                td #{game.dateandtime.toUTCString()}
+                                td #{game.dateandtime}
                                 td #{game.home} v #{game.away}
                                 td 
                                     select(id='result#{i}', name='result#{i}')

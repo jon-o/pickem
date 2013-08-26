@@ -86,6 +86,24 @@ pickem.factory('pickemService', function($q, $http) {
                 
                 return deferred.promise;
             }
+        },
+        
+        login: function(data) {
+            var deferred = $q.defer();
+            
+            $http({
+                method: 'POST',
+                url: '/api/login',
+                data: data
+            })
+            .success(function(status) {
+                deferred.resolve(status);
+            })
+            .error(function(data, status) {
+                deferred.reject(status);
+            });
+            
+            return deferred.promise;
         }
     };
 });

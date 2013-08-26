@@ -30,13 +30,15 @@ var errorHandler = function(err, req, res, next) {
     res.render('error');
 };
 
-var auth = express.basicAuth(config.adminUser, config.adminPassword);
+var adminAuth = express.basicAuth(config.adminUser, config.adminPassword);
 
 app.configure(function() {
     app.set('view engine', 'jade');
     app.set('views', __dirname + '/Views');
     app.use(express.static(path.join(__dirname, 'Public')));
     app.use(express.bodyParser());
+    app.use(express.cookieParser());
+    app.use(express.session({ secret: config.sessionSecret }));
     app.use(app.router); //Enable error handling
     app.use(notFoundHandler); //If no routes match, this will be called
     app.use(errorHandler); //Express knows a method with 4 params, is for handling errors
@@ -47,6 +49,7 @@ app.get('/', function(req, res) {
 });
 
 //*** API ***
+app.post('/api/login', controller.login);
 app.get('/api/picks/season/:seasonId/round/:round', controller.findPicksForRound);
 app.get('/api/picks/season/:seasonId', controller.findPicksForCurrentRound);
 app.post('/api/picks', controller.savePick);
@@ -54,10 +57,10 @@ app.get('/api/leaderboard/season/:seasonId', controller.getLeaderboardForSeason)
 app.post('/api/user/showInLeaderboard', controller.updateShowInLeaderboardSetting);
 
 //*** ADMIN ***
-app.get('/admin', auth, adminController.showSeasons);
-app.get('/admin/season/:seasonId', auth, adminController.showRounds);
-app.get('/admin/season/:seasonId/round/:round', auth, adminController.showGames);
-app.post('/admin/season/:seasonId/round/:round', auth, adminController.updateGames);
+app.get('/admin', adminAuth, adminController.showSeasons);
+app.get('/admin/season/:seasonId', adminAuth, adminController.showRounds);
+app.get('/admin/season/:seasonId/round/:round', adminAuth, adminController.showGames);
+app.post('/admin/season/:seasonId/round/:round', adminAuth, adminController.updateGames);
 
 app.listen(process.env.PORT, process.env.IP);
 

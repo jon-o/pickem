@@ -97,8 +97,8 @@ var getPicksNavigationUri = function (firstLastRounds, season, selectedRound) {
     var selectedRoundInt = parseInt(selectedRound, 10);
     var validSeasonId = firstLastRounds.firstRound !== null;
     
-    var isValidFirstRound = (validSeasonId && selectedRoundInt !== parseInt(firstLastRounds.firstround, 10));
-    var isValidLastRound = (validSeasonId && selectedRoundInt !== parseInt(firstLastRounds.lastround, 10));    
+    var isValidFirstRound = (validSeasonId && selectedRoundInt !== parseInt(firstLastRounds.firstRound, 10));
+    var isValidLastRound = (validSeasonId && selectedRoundInt !== parseInt(firstLastRounds.lastRound, 10));    
     
     var uriCollection = {
         previousUri: isValidFirstRound ? 

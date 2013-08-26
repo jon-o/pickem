@@ -2,7 +2,7 @@ SET @@auto_increment_increment=1;
 
 DROP TABLE IF EXISTS games;
 CREATE TABLE games (
-  Id int NOT NULL AUTO_INCREMENT,
+  Id int NOT NULL UNIQUE AUTO_INCREMENT,
   DateAndTime datetime NOT NULL,
   HomeTeamId int NOT NULL,
   AwayTeamId int NOT NULL,
@@ -29,7 +29,7 @@ INSERT INTO games (DateAndTime, HomeTeamId, AwayTeamId, Result, RoundId, Score) 
 
 DROP TABLE IF EXISTS leagues;
 CREATE TABLE leagues (
-  Id int NOT NULL AUTO_INCREMENT,
+  Id int NOT NULL UNIQUE AUTO_INCREMENT,
   League varchar(255) NOT NULL,
   SportId int NOT NULL,
   PRIMARY KEY (Id)
@@ -62,7 +62,7 @@ INSERT INTO picks VALUES
 
 DROP TABLE IF EXISTS rounds;
 CREATE TABLE rounds (
-  Id int NOT NULL AUTO_INCREMENT,
+  Id int NOT NULL UNIQUE AUTO_INCREMENT,
   SeasonId int NOT NULL,
   RoundStartDate datetime DEFAULT NULL,
   Round int NOT NULL,
@@ -80,7 +80,7 @@ INSERT INTO rounds (SeasonId, RoundStartDate, Round, Text) VALUES
 
 DROP TABLE IF EXISTS seasons;
 CREATE TABLE seasons (
-  Id int NOT NULL AUTO_INCREMENT,
+  Id int NOT NULL UNIQUE AUTO_INCREMENT,
   Name varchar(255) NOT NULL,
   LeagueId int NOT NULL,
   PRIMARY KEY (Id)
@@ -92,7 +92,7 @@ INSERT INTO seasons (Name, LeagueId) VALUES
 
 DROP TABLE IF EXISTS sports;
 CREATE TABLE sports (
-  Id int NOT NULL AUTO_INCREMENT,
+  Id int NOT NULL UNIQUE AUTO_INCREMENT,
   Name varchar(255) NOT NULL,
   AllowDraw tinyint(1) NOT NULL,
   PRIMARY KEY (Id)
@@ -105,7 +105,7 @@ INSERT INTO sports (Name, AllowDraw) VALUES
 
 DROP TABLE IF EXISTS teams;
 CREATE TABLE teams (
-  Id int NOT NULL AUTO_INCREMENT,
+  Id int NOT NULL UNIQUE AUTO_INCREMENT,
   Name varchar(255) NOT NULL,
   PRIMARY KEY (Id)
 );
@@ -125,9 +125,9 @@ INSERT INTO teams (Name) VALUES
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-  Id int NOT NULL AUTO_INCREMENT,
-  ThirdPartyId varchar(30) NOT NULL,
-  FacebookId varchar(20) NOT NULL,
+  Id int NOT NULL UNIQUE AUTO_INCREMENT,
+  ThirdPartyId varchar(30) NOT NULL UNIQUE,
+  FacebookId varchar(20) NOT NULL UNIQUE,
   FacebookUsername varchar(100) NULL,
   Name varchar(100) NOT NULL,
   ShowInLeaderboard tinyint(1) NOT NULL,

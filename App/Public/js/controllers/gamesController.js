@@ -59,13 +59,13 @@ pickem.controller('GamesController',
         };
         
         var displaySuccessPickNotification = function (game) {
-            toastr.success(buildGameName(game), 'Pick Saved: ' + game.pick.toUpperCase());
+            toastr.success(buildGameName(game), 'Pick Saved: ' + determinePickName(game));
             pickSaveErrors = 0;
         };
         
         var displayErrorPickNotification = function (game) {
             if (pickSaveErrors < 3) {
-                toastr.warning(buildGameName(game) + ' - Please try again', 'Pick not saved: ' + game.pick.toUpperCase());
+                toastr.warning(buildGameName(game) + ' - Please try again', 'Pick not saved: ' + determinePickName(game));
             } else {
                 toastr.error('Unable to save your pick - Please try again later', 'Oops! Something is wrong...');
             }
@@ -76,6 +76,18 @@ pickem.controller('GamesController',
         var buildGameName = function (game) {
             return game.home + ' vs ' + game.away;
         };
+        
+        var determinePickName = function (game) {
+            switch (game.pick.toLowerCase())
+            {
+                case 'home':
+                    return game.home;
+                case 'away':
+                    return game.away;
+                default:
+                    return "Draw";
+            }
+        }
     }
 );
 

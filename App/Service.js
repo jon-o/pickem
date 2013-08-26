@@ -187,10 +187,18 @@ exports.saveUser = function(criteria) {
         criteria.uid, criteria.facebookId, criteria.facebookUsername, criteria.name));
     
     var eventEmitter = new EventEmitter();
-
-    var query = db.executeQuery(sql.saveUser,
-        [criteria.uid, criteria.facebookUsername, criteria.facebookId, criteria.name,
-        criteria.uid]);
+    
+    var query = db.executeQueries([
+        { 
+            query: sql.saveUserUpdate, 
+            params: [criteria.facebookUsername, criteria.name, criteria.uid], 
+            name: 'saveUserUpdate' },
+        { 
+            query: sql.saveUserInsert, 
+            params: [criteria.uid, criteria.facebookUsername, criteria.facebookId, criteria.name, 
+                criteria.uid], 
+            name: 'saveUserInsert' }
+    ]);
 
     query.on('error', function(err) {        
         eventEmitter.emit('error', err);

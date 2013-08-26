@@ -4,6 +4,7 @@ pickem.controller('GamesController',
     function GamesController($scope, pickemService) {
         var previousRoundUri;
         var nextRoundUri;          
+        var pickSaveErrors = 0;
         
         $scope.selectedRound = pickemService.rounds.getCurrentRoundGames(1);             
         
@@ -26,9 +27,9 @@ pickem.controller('GamesController',
                 
                 pickemService.pick.savePick(game.id, pick)
                     .then(function() {                        
-                        toastr.success(game.home + ' vs ' + game.away, 'Pick Saved: ' + game.pick.toUpperCase());                        
+                        displaySuccessPickNotification(game);                        
                 }, function() {                    
-                        toastr.error(game.home + ' vs ' + game.away, 'Pick not saved: ' + game.pick.toUpperCase());
+                        displayErrorPickNotification(game);
                         game.pick = previousPick;
                 });
             }            
@@ -55,7 +56,38 @@ pickem.controller('GamesController',
             } else {
                 $scope.errorMessage = handleError(response.message);
             }
-        };        
+        };
+        
+        var displaySuccessPickNotification = function (game) {
+            toastr.success(buildGameName(game), 'Pick Saved: ' + determinePickName(game));
+            pickSaveErrors = 0;
+        };
+        
+        var displayErrorPickNotification = function (game) {
+            if (pickSaveErrors < 3) {
+                toastr.warning(buildGameName(game) + ' - Please try again', 'Pick not saved: ' + determinePickName(game));
+            } else {
+                toastr.error('Unable to save your pick - Please try again later', 'Oops! Something is wrong...');
+            }
+                            
+            pickSaveErrors += 1;            
+        };
+        
+        var buildGameName = function (game) {
+            return game.home + ' vs ' + game.away;
+        };
+        
+        var determinePickName = function (game) {
+            switch (game.pick.toLowerCase())
+            {
+                case 'home':
+                    return game.home;
+                case 'away':
+                    return game.away;
+                default:
+                    return "Draw";
+            }
+        }
     }
 );
 

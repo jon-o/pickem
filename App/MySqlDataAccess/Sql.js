@@ -51,10 +51,15 @@ exports.savePick = util.format('%s %s %s %s',
 '    (SELECT Id FROM Users WHERE ThirdPartyId = ?),',
 '    ?, ?)');
 
-exports.saveUser = util.format('%s %s %s %s',
-'REPLACE INTO users (thirdpartyid, facebookusername, name, showinleaderboard, facebookid)',
+exports.saveUserUpdate = util.format('%s %s %s',
+'UPDATE users',
+'SET facebookusername = ?, name = ?',
+'WHERE thirdpartyid = ?');
+
+exports.saveUserInsert = util.format('%s %s %s',
+'INSERT INTO users (thirdpartyid, facebookusername, facebookid, name, showinleaderboard)',
 'VALUES (?, ?, ?, ?, 0)',
-'WHERE NOT EXISTS (SELECT 1 FROM users WHERE thirdpartyid = ?)');
+'ON DUPLICATE KEY UPDATE thirdpartyid = thirdpartyid');
 
 exports.updateShowInLeaderboardSetting = util.format('%s %s %s',
 'UPDATE users',

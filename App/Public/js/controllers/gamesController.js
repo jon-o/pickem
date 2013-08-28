@@ -1,7 +1,7 @@
 'use strict';
 
 pickem.controller('GamesController', 
-    function GamesController($scope, pickemService) {
+    function GamesController($scope, pickemService, sharedService) {
         var previousRoundUri;
         var nextRoundUri;          
         var pickSaveErrors = 0;
@@ -59,7 +59,9 @@ pickem.controller('GamesController',
         };
         
         var displaySuccessPickNotification = function (game) {
-            toastr.success(buildGameName(game), 'Pick Saved: ' + determinePickName(game));
+            sharedService.notify.successNotification(buildGameName(game), 'Pick Saved: ' + determinePickName(game));
+            //toastr.success(buildGameName(game), 'Pick Saved: ' + determinePickName(game));
+            
             pickSaveErrors = 0;
         };
         

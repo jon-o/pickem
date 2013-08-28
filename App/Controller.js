@@ -1,18 +1,31 @@
 var service = require("./Service.js");
 
 exports.login = function (req, res) {
-    if (req.body.third_party_id === null ||
-        req.body.id === null ||
-        req.body.username === null ||
-        req.body.name === null) {
+    if (req.body.third_party_id == null ||
+        req.body.id == null ||
+        req.body.name == null) {
         
         res.send(403, 'Bad authorization credentials.');
     } else {
-        console.log('Uid: ' + req.body.third_party_id);
-        console.log('Id: ' + req.body.id);
-        console.log('Username: ' + req.body.username);
-        console.log('Name: ' + req.body.name);
-        res.send(200);
+        var criteria = {
+            uid: req.body.third_party_id,
+            facebookId: req.body.id,
+            facebookUsername: req.body.username,
+            name: req.body.name
+        };
+        console.log(criteria);
+        
+        var task = service.saveUser(criteria);
+        
+        task.on('error', function(err) {
+            handleError(err, res);
+        });
+        
+        task.on('end', function(result) {
+            req.session.uid = criteria.uid;
+            
+            res.send(200);
+        });
     }
 };
 
@@ -132,6 +145,8 @@ exports.getLeaderboardForSeason = function(req, res) {
 };
 
 var getUid = function(req) {
+    console.log('Uid: ' + req.session.uid);
+    
     return 'test';
 };
 

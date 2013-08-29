@@ -53,7 +53,7 @@ pickem.controller('GamesController',
                 previousRoundUri = response.round.navigation.previousUri;
                 nextRoundUri = response.round.navigation.nextUri;                
             } else {
-                $scope.errorMessage = handleError(response.message);
+                sharedService.errorHandler.handleError(response.message);
             }
         };
         
@@ -81,11 +81,6 @@ pickem.controller('GamesController',
                 default:
                     return "Draw";
             }
-        }
+        };
     }
 );
-
-var handleError = function (errorMessage) {
-    return 'Oooops...something went wrong - ' + errorMessage;
-};
-

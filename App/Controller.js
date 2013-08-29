@@ -5,7 +5,8 @@ exports.login = function (req, res) {
         req.body.id == null ||
         req.body.name == null) {
         
-        res.send(403, 'Bad authorization credentials.');
+        res.setHeader('WWW-Authenticate', 'realm="My realm"');
+        res.send(401, 'Bad credentials.');
     } else {
         var criteria = {
             uid: req.body.third_party_id,
@@ -145,9 +146,9 @@ exports.getLeaderboardForSeason = function(req, res) {
 };
 
 var getUid = function(req) {
-    console.log('Uid: ' + req.session.uid);
+    console.log('Controller.getUID - Uid: ' + req.session.uid);
     
-    return 'test';
+    return req.session.uid;
 };
 
 var handleError = function (err, res) {

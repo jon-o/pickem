@@ -1,19 +1,23 @@
 'use strict'
+pickem.factory('toast', [function () {
+    return toastr;
+}]);
 
-pickem.factory('sharedService', function () {
+
+pickem.factory('sharedService', function (toast) {
     var notifierErrorCount = 0;
     
     var displayUnsuccessfulNotification = function (message, title) {
         if (notifierErrorCount < 3) {
-            toastr.warning(message, title);
+            toast.warning(message, title);
             notifierErrorCount++;
         } else {
-            toastr.error('Please try again later', 'Oops! Something is wrong...');
+            toast.error('Please try again later', 'Oops! Something is wrong...');
         }
     };
     
     var displaySuccessfulNotification = function (message, title) {
-        toastr.success(message, title);
+        toast.success(message, title);
         notifierErrorCount = 0;
     };
     

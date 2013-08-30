@@ -152,7 +152,7 @@ exports.getLeaderboardForSeason = function(criteria) {
     });
     
     query.on('end', function(result) {
-        var leaderboard = _.map(result.leaderboard, function(item) {
+        var leaderboard = _.map(result.leaderboard, function(item, key) {
             var isUser = item.thirdpartyid == criteria.uid ? true : false;
             
             var imageUrl = "https://fbstatic-a.akamaihd.net/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif";
@@ -163,7 +163,7 @@ exports.getLeaderboardForSeason = function(criteria) {
             }
             
             return {
-                position: item.position,
+                position: key + 1,
                 correctPicks: item.correctpicks,
                 imageUrl: imageUrl,
                 name: name,

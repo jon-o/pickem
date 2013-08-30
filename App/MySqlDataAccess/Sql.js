@@ -72,7 +72,7 @@ exports.getUser = util.format('%s %s %s %s',
 'FROM users',
 'WHERE thirdpartyid = ?');
 
-exports.getLeaderboardForSeason = util.format('%s %s %s %s %s %s %s %s %s %s',
+exports.getLeaderboardForSeason = util.format('%s %s %s %s %s %s %s %s %s %s %s',
 'SELECT @curRow := @curRow + 1 AS position,',
 '    COUNT(u.Id) AS correctpicks, u.thirdpartyid, u.facebookid,',
 '    u.name, u.showinleaderboard',
@@ -83,7 +83,8 @@ exports.getLeaderboardForSeason = util.format('%s %s %s %s %s %s %s %s %s %s',
 'INNER JOIN users AS u ON u.id = p.userId',
 'WHERE r.seasonId = ?',
  '   AND p.pick = g.result',
-'GROUP BY u.Id');
+'GROUP BY u.Id',
+'ORDER BY correctpicks DESC');
 
 //*** ADMIN ***
 exports.getSeasons = 'SELECT id, name FROM seasons';

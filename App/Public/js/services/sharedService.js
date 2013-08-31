@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 pickem.factory('toast', [function () {
     return toastr;
 }]);

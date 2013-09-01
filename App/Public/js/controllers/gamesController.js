@@ -46,7 +46,7 @@ pickem.controller('GamesController',
         
         var processRoundResponse = function (response) {
             if(response.valid) {
-                $scope.games = response.round.games;
+                $scope.games = buildGameViewModels(response.round.games);
                 $scope.roundTitle = response.season.name + ' ' + response.round.text;
                 $scope.errorMessage = '';
                 
@@ -57,30 +57,24 @@ pickem.controller('GamesController',
             }
         };
         
+        var buildGameViewModels = function (games) {
+              var gameViewModels = [];
+              
+              games.forEach(function(game) {
+                  gameViewModels.push(new GameViewModel(game));
+              });
+              
+              return gameViewModels;
+        };
+        
         var displaySuccessPickNotification = function (game) {
             sharedService.notifier.successfulNotification(
-                buildGameName(game), 'Pick Saved: ' + determinePickName(game));
+                game.name, 'Pick Saved: ' + game.getPickName());
         };
         
         var displayErrorPickNotification = function (game) {
-                sharedService.notifier.unsuccessfulNotification(
-                    buildGameName(game) + ' - Please try again', 'Pick not saved: ' + determinePickName(game));
-        };
-        
-        var buildGameName = function (game) {
-            return game.home + ' vs ' + game.away;
-        };
-        
-        var determinePickName = function (game) {
-            switch (game.pick.toLowerCase())
-            {
-                case 'home':
-                    return game.home;
-                case 'away':
-                    return game.away;
-                default:
-                    return "Draw";
-            }
+            sharedService.notifier.unsuccessfulNotification(
+                game.name + ' - Please try again', 'Pick not saved: ' + game.getPickName());
         };
     }
 );

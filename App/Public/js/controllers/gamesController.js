@@ -40,6 +40,9 @@ pickem.controller('GamesController',
                 
                 $scope.selectedRound.then(function(response) {
                     processRoundResponse(response);
+                }, function() {
+                    sharedService.notifier.unsuccessfulNotification(
+                        'Please try again', 'Error navigating to round');
                 });
             }
         };

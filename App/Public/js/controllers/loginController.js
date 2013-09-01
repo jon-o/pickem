@@ -9,6 +9,8 @@ pickem.controller('LoginController',
         
         $scope.login = function() {
             $scope.loginEnabled = false;
+            sharedService.notifier.clear();
+            
             authenticate();
         };
         
@@ -24,14 +26,14 @@ pickem.controller('LoginController',
                             //Something went wrong with the login to our API
                             enableLoginButton();
                             sharedService.errorHandler.handleError(
-                                "Unsuccessful attempt to login to Pickem.");
+                                "Unsuccessful attempt to login to Pickem.", "Login failed", true);
                         }
                     );
                 }, function(fbResponse) {
                     //Something went wrong with the login to FB
                     enableLoginButton();
                     sharedService.errorHandler.handleError(
-                        "Unsuccessful attempt to login to Facebook.");
+                        "Unsuccessful attempt to login to Facebook.", "Login failed", true);
                 }
             );
         };

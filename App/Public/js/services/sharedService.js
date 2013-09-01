@@ -7,12 +7,20 @@ pickem.factory('toast', [function () {
 pickem.factory('sharedService', function (toast) {
     var notifierErrorCount = 0;
     
-    var displayUnsuccessfulNotification = function (message, title) {
+    var displayUnsuccessfulNotification = function (message, title, sticky) {
+        if (sticky) {
+            toast.options.timeOut = 0;
+        }
+        
         if (notifierErrorCount < 3) {
             toast.warning(message, title);
             notifierErrorCount++;
         } else {
             toast.error('Please try again later', 'Oops! Something is wrong...');
+        }
+        
+        if (sticky) {
+            toast.options.timeOut = 5000;
         }
     };
     
@@ -29,12 +37,24 @@ pickem.factory('sharedService', function (toast) {
             
             unsuccessfulNotification: function(message, title) {
                 displayUnsuccessfulNotification(message, title);
+            },
+        
+            clear: function() {
+                toast.clear();
             }
         },
         
         errorHandler: {
-            handleError: function(errorMessage) {
-                displayUnsuccessfulNotification(errorMessage, 'Oops! Something went wrong...');    
+            handleError: function(errorMessage, title, sticky) {
+                if (title == null) {
+                    title = 'Oops! Something went wrong...';
+                }
+                
+                if (sticky == null) {
+                    sticky = false;
+                }
+                
+                displayUnsuccessfulNotification(errorMessage, title, sticky);    
             }
         }
     };

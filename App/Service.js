@@ -3,6 +3,7 @@ var sql = require('./MySqlDataAccess/Sql.js');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var _ = require('underscore');
+require('datejs');
 
 
 exports.retrivePicksForCurrentRound = function(seasonId, uid) {
@@ -76,8 +77,8 @@ var buildGamesCollection = function (games) {
     var currentDateTime = new Date();
     
     var gamesCollection = _.map(games, function(game) {
-        var gameDateTime = new Date(Date.parse(game.dateandtime));
-        
+        var gameDateTime = Date.parse(game.dateandtime);
+
         return {
             date: game.dateandtime,
             home: game.home,

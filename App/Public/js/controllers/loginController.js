@@ -15,6 +15,8 @@ pickem.controller('LoginController',
         };
         
         var authenticate = function() {
+            $rootScope.isLoggedIn = false;
+            
             facebookService.login()
                 .then(function(fbResponse) {
                     //Sign into our api and send user data from FB

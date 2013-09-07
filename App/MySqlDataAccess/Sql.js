@@ -45,6 +45,11 @@ exports.firstLastRounds = util.format('%s %s %s',
 'FROM rounds',
 'WHERE SeasonId = ?');
 
+exports.getGame = util.format('',
+'SELECT id, dateandtime, hometeamid, awayteamid, result, roundid, score',
+'FROM games',
+'WHERE id = ?');
+
 exports.savePick = util.format('%s %s %s %s',
 'REPLACE INTO picks (UserId, GameId, Pick)',
 'VALUES (',

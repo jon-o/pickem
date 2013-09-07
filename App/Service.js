@@ -124,17 +124,31 @@ exports.savePick = function(criteria) {
     
     var eventEmitter = new EventEmitter();
     
-    var query = db.executeQuery(sql.savePick, 
-        [criteria.uid, criteria.gameId, criteria.pick]);
+    var gameQuery = db.executeQuery(sql.getGame, [criteria.gameId]);
 
-    query.on('error', function(err) {        
+    gameQuery.on('error', function(err) {        
         eventEmitter.emit('error', err);
     });
     
-    query.on('end', function(result) {
-        eventEmitter.emit('end', result);        
+    gameQuery.on('end', function(result) {
+        var currentDate = new Date();
+        var gameStart = Date.parse(result[0].dateandtime).add(2).minutes();
+        
+        if (gameStart.isAfter(currentDate)) {
+            var query = db.executeQuery(sql.savePick, 
+                [criteria.uid, criteria.gameId, criteria.pick]);
+        
+            query.on('error', function(err) {        
+                eventEmitter.emit('error', err);
+            });
+            
+            query.on('end', function(result) {
+                eventEmitter.emit('end', result);        
+            });
+        } else {
+            eventEmitter.emit('error', { error: 'Game has already started.' });
+        }
     });
-    
     return eventEmitter;
 };
 

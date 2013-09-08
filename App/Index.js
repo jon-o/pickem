@@ -8,7 +8,6 @@ if (process.env.NODETIME_ACCOUNT_KEY) {
 
 var express = require("express");
 var path = require("path");
-//var games = require("./Routes/Games.js");
 var config = require('./Config.js');
 var controller = require("./Controller.js");
 var adminController = require("./AdminController.js");
@@ -39,7 +38,7 @@ var apiAuth = function(req, res, next) {
             next();
         } else {
             res.setHeader('WWW-Authenticate', 'realm="My realm"');
-            res.send(401, 'Not logged in.');
+            res.send(401, { error: 'Not logged in.' });
         }
     }
 };

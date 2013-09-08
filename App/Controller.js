@@ -6,7 +6,7 @@ exports.login = function (req, res) {
         req.body.name == null) {
         
         res.setHeader('WWW-Authenticate', 'realm="My realm"');
-        res.send(401, 'Bad credentials.');
+        res.send(401, { error: 'Bad credentials.' });
     } else {
         var criteria = {
             uid: req.body.third_party_id,
@@ -25,7 +25,7 @@ exports.login = function (req, res) {
         task.on('end', function(result) {
             req.session.uid = criteria.uid;
             
-            res.send(200);
+            res.send(201);
         });
     }
 };
@@ -57,7 +57,7 @@ exports.findPicksForRound = function (req, res) {
                 json: function() { res.send(result); }            
             });
         } else {
-            res.send(404, 'Not found');
+            res.send(404, { error: 'Not found' });
         }    
     });
 };
@@ -82,7 +82,7 @@ exports.findPicksForCurrentRound = function (req, res) {
                 json: function() { res.send(result); }            
             });
         } else {
-            res.send(404, 'Not found');
+            res.send(404, { error: 'Not found' });
         }    
     });
 };
@@ -101,7 +101,7 @@ exports.savePick = function(req, res) {
     });
     
     task.on('end', function(result) {
-       res.send(200);
+       res.send(201);
     });
 };
 
@@ -118,7 +118,7 @@ exports.updateShowInLeaderboardSetting = function(req, res) {
     });
     
     task.on('end', function(result) {
-        res.send(200);
+        res.send(201);
     });
 };
 
@@ -140,7 +140,7 @@ exports.getLeaderboardForSeason = function(req, res) {
                 json: function() { res.send(result); }            
             });
         } else {
-            res.send(404, 'Not found');
+            res.send(404, { error: 'Not found' });
         }
     });
 };
@@ -154,7 +154,7 @@ var getUid = function(req) {
 var handleError = function (err, res) {
     console.log("****ERROR****");
     console.log(err);
-    res.send(500, "Oooops...something went wrong.");
+    res.send(500, { error: 'Oooops...something went wrong.' });
 };
 
 var validateNumeric = function (valuesToValidate) {

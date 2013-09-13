@@ -111,17 +111,26 @@ CREATE TABLE teams (
 );
 
 INSERT INTO teams (Name) VALUES
-    ('Queens Park Rangers'),
-    ('Norwich'),
-    ('Arsenal'),
-    ('Newcastle United'),
-    ('West Bromwich Albion'),
-    ('Everton'),
-    ('Chelsea'),
     ('Manchester United'),
+    ('Crystal Palace'),
+    ('Aston Villa'),
+    ('Newcastle'),
+    ('Fulham'),
+    ('West Bromwich(WBA)'),
+    ('Hull City'),
+    ('Cardiff City'),
+    ('Stoke City'),
+    ('Sunderland'),
+    ('Manchester City'),
+    ('Arsenal'),
+    ('Tottenham Hotspur'),
+    ('Norwich City'),
+    ('Everton'),
+    ('Chelsea FC'),
     ('Southampton'),
-    ('Wigan Athletic');
-
+    ('West Ham United'),
+    ('Swansea City'),
+    ('Liverpool');
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (

@@ -75,7 +75,8 @@ INSERT INTO rounds (SeasonId, RoundStartDate, Round, Text) VALUES
     (1, '2013-02-17 00:00:00', 2, 'week 2'),
     (1, '2013-02-24 00:00:00', 3, 'week 3'),
     (1, '2013-03-03 00:00:00', 4, 'week 4'),
-    (1, '2013-03-10 00:00:00', 5, 'week 5');
+    (1, '2013-03-10 00:00:00', 5, 'week 5'),
+    (1, '2013-09-28 00:00:00', 6, 'week 6');
 
 
 DROP TABLE IF EXISTS seasons;

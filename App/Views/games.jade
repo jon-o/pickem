@@ -26,7 +26,9 @@ block content
                     tbody
                         each game, i in games
                             tr
-                                td #{game.dateandtime}
+                                td 
+                                    input(id='date#{i}', name='date#{i}', value='#{game.dateandtime}', 
+                                        pattern='^20[0-9][0-9]-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]$')
                                 td #{game.home} v #{game.away}
                                 td 
                                     select(id='result#{i}', name='result#{i}')

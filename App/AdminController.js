@@ -58,6 +58,7 @@ exports.updateGames = function(req, res) {
     for (var i = 0; i < req.body.count; i++) {
         var game = {
             id: req.body['id' + i],
+            date: req.body['date' + i],
             result: req.body['result' + i],
             score: req.body['score' + i]
         };

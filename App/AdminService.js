@@ -60,7 +60,7 @@ exports.updateGames = function(criteria) {
         
         return {
             query: sql.updateGame,
-            params: [result, score, game.id],
+            params: [game.date, result, score, game.id],
             name: game.id.toString()
         };
     });

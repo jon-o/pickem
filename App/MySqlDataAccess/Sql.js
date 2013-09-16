@@ -100,8 +100,9 @@ exports.getRounds = util.format('%s %s %s %s',
 'WHERE seasonId = ?',
 'ORDER BY round');
 
-exports.getGames = util.format('%s %s %s %s %s %s %s',
-'SELECT g.id, DATE_FORMAT(g.dateandtime,\'%a, %e %b %Y %H:%i:%s UTC\') AS dateandtime, home.name AS home, away.name AS away, g.result, COALESCE(g.score, \'\') AS score',
+exports.getGames = util.format('%s %s %s %s %s %s %s %s',
+'SELECT g.id, DATE_FORMAT(g.dateandtime,\'%Y-%m-%d %H:%i:%s\') AS dateandtime,',
+'   home.name AS home, away.name AS away, g.result, COALESCE(g.score, \'\') AS score',
 'FROM games AS g',
 'INNER JOIN rounds AS r ON r.id = g.roundId',
 'INNER JOIN teams AS home ON home.id = g.hometeamid',
@@ -111,5 +112,5 @@ exports.getGames = util.format('%s %s %s %s %s %s %s',
 
 exports.updateGame = util.format('%s %s %s',
 'UPDATE games',
-'SET result = ?, score = ?',
+'SET dateandtime = ?, result = ?, score = ?',
 'WHERE id = ?');

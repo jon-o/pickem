@@ -88,7 +88,7 @@ CREATE TABLE seasons (
 );
 
 INSERT INTO seasons (Name, LeagueId) VALUES
-    ('English Premier League 2012 / 2013', 1);
+    ('English Premier League 2013 / 2014', 1);
 
 
 DROP TABLE IF EXISTS sports;

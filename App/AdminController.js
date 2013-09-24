@@ -63,7 +63,7 @@ exports.updateGames = function(req, res) {
             score: req.body['score' + i]
         };
         
-        criteria.games[i] = game;
+        criteria.games.push(game);
     }
     
     var task = adminService.updateGames(criteria);

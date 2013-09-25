@@ -78,7 +78,12 @@ var buildGamesCollection = function (games) {
     
     var gamesCollection = _.map(games, function(game) {
         var gameDateTime = Date.parse(game.dateandtime);
-
+        
+        var isCorrect = false;
+        if (game.score != null && game.pick == game.result) {
+            isCorrect = true;
+        }
+        
         return {
             date: game.dateandtime,
             home: game.home,
@@ -87,7 +92,8 @@ var buildGamesCollection = function (games) {
             allowDraw: game.allowdraw,
             score: game.score,
             id: game.id,
-            hasBegun: (gameDateTime < currentDateTime) ? true : false
+            hasBegun: (gameDateTime < currentDateTime) ? true : false,
+            isCorrect: isCorrect
         };
     });
     

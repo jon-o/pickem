@@ -2,7 +2,7 @@ var util = require('util');
 
 exports.picksForCurrentRound = util.format('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s',
 'SELECT g.dateandtime AS dateandtime, t1.name AS home, t2.name AS away, p.pick AS pick, s.allowdraw AS allowdraw,', 
-'g.score AS score, g.id AS id, r.text AS roundtext, sea.name AS seasonname, r.round AS round',
+'g.score AS score, g.result AS result, g.id AS id, r.text AS roundtext, sea.name AS seasonname, r.round AS round',
 'FROM games g',
 'JOIN teams t1 ON g.hometeamid = t1.id',
 'JOIN teams t2 ON g.awayteamid = t2.id',
@@ -23,7 +23,7 @@ exports.picksForCurrentRound = util.format('%s %s %s %s %s %s %s %s %s %s %s %s 
 
 exports.picks = util.format('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s',
 'SELECT g.dateandtime AS dateandtime, t1.name AS home, t2.name AS away, p.pick AS pick, s.allowdraw AS allowdraw,', 
-'g.score AS score, g.id AS id, r.text AS roundtext, sea.name AS seasonname, r.round AS round',
+'g.score AS score, g.result AS result, g.id AS id, r.text AS roundtext, sea.name AS seasonname, r.round AS round',
 'FROM games g',
 'JOIN teams t1 ON g.hometeamid = t1.id',
 'JOIN teams t2 ON g.awayteamid = t2.id',

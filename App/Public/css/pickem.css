@@ -16,6 +16,12 @@
     display: inline-block; 
     width: auto; 
     font-size: 0;
+    box-shadow: none;
+}
+
+.btn:hover {
+    color: #000;
+    background-color: #ddd;
 }
 
 .btn-pick {
@@ -29,17 +35,15 @@
 
 .pick-game .active {
     background-color: #5393c5;
-    box-shadow: none; 
+    box-shadow: none;
 }
 
 .pick-game .correct {
-    background-color: green;
-    box-shadow: none;
+    background-color: #008A00;
 }
 
 .pick-game .incorrect {
-    background-color: red;
-    box-shadow: none;
+    background-color: #AC193D;
 }
 
 .cursor-default {

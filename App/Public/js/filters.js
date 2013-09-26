@@ -2,10 +2,8 @@
 
 pickem.filter('pickButtonClasses', function() {
     return function(input) {
-        var classes = [];
-        classes.push('btn');
-        classes.push('btn-pick');
-        
+        var classes = ['btn', 'btn-pick'];
+
         if (input.game.score == null && input.game.pick == input.option) {
             classes.push('active');
         }
@@ -20,11 +18,7 @@ pickem.filter('pickButtonClasses', function() {
             classes.push('cursor-default');
         }
         
-        var cssClasses = '';
-        
-        classes.forEach(function(item) {
-            cssClasses += item + ' ';
-        });
+        var cssClasses = classes.join(' ');
         
         return cssClasses;
     };

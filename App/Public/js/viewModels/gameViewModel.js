@@ -8,6 +8,7 @@ function GameViewModel(game) {
     self.score = game.score;
     self.id = game.id;
     self.hasBegun = game.hasBegun;
+    self.isCorrect = game.isCorrect;
     self.name = game.home + ' vs ' + game.away;
     self.getPickName = function() {
         switch (self.pick.toLowerCase())

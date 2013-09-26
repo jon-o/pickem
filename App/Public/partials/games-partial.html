@@ -10,21 +10,18 @@
         
         <li ng-repeat="game in games" class="no-list-style-type">
             <div class="pick-game">                  
-                <button class="btn btn-pick" 
-                ng-class="{'active':game.pick == 'HOME'}"
+                <button class="{{{game: game, option: 'HOME'} | pickButtonClasses}}" 
                 ng-disabled="game.pick != 'HOME' && game.hasBegun"
                 ng-click="sendPick(game, 'HOME')">
                     {{game.home}}
                 </button>
-                <button class="btn btn-pick" 
-                ng-class="{'active':game.pick == 'DRAW'}"
+                <button class="{{{game: game, option: 'DRAW'} | pickButtonClasses}}" 
                 ng-disabled="game.pick != 'DRAW' && game.hasBegun"
                 ng-click="sendPick(game, 'DRAW')"
                 ng-show="game.allowDraw">
                     Draw
                 </button>
-                <button class="btn btn-pick" 
-                ng-class="{'active':game.pick == 'AWAY'}"
+                <button class="{{{game: game, option: 'AWAY'} | pickButtonClasses}}"
                 data-ng-disabled="game.pick != 'AWAY' && game.hasBegun"
                 ng-click="sendPick(game, 'AWAY')">
                     {{game.away}}                    

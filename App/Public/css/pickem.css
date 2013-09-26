@@ -31,3 +31,17 @@
     background-color: #5393c5;
     box-shadow: none; 
 }
+
+.pick-game .correct {
+    background-color: green;
+    box-shadow: none;
+}
+
+.pick-game .incorrect {
+    background-color: red;
+    box-shadow: none;
+}
+
+.cursor-default {
+	cursor: default;
+}

@@ -24,6 +24,15 @@
     background-color: #ddd;
 }
 
+.btn-nav {
+    width: 130px;
+    height: 35px;        
+    white-space: normal;
+    border-radius: 0;
+    margin: 1px;
+    background-color: #eee;
+}
+
 .btn-pick {
     width: 150px;
     height: 50px;        

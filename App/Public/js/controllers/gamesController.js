@@ -52,6 +52,7 @@ pickem.controller('GamesController',
                 $scope.games = buildGameViewModels(response.round.games);
                 $scope.roundTitle = response.season.name + ' ' + response.round.text;
                 $scope.errorMessage = '';
+                $scope.score = response.round.score;
                 
                 previousRoundUri = response.round.navigation.previousUri;
                 nextRoundUri = response.round.navigation.nextUri;                

@@ -52,13 +52,22 @@ var buildRetrievePicksResponse = function (results, seasonId) {
     
     if (validResponse) {
         var round = results.picks[0].round;
+        var games = buildGamesCollection(results.picks);
+        
+        var score = _.countBy(games, function(game) {
+            return game.isCorrect ? "correct" : "incorrect";
+        });
+        score.incorrect = score.incorrect || 0;
+        score.correct = score.correct || 0;
+        
         response = {
             valid: true,
             round: {
-                games: buildGamesCollection(results.picks),
+                games: games,
                 id: round,
                 text: results.picks[0].roundtext,
-                navigation: getPicksNavigationUri(results.firstLastRounds[0], seasonId, round)
+                navigation: getPicksNavigationUri(results.firstLastRounds[0], seasonId, round),
+                score: score
             },
             season : {
                 name: results.picks[0].seasonname

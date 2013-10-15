@@ -1,26 +1,40 @@
 'use strict';
 
-pickem.factory('pickemService', function($q, $http) {
+pickem.factory('pickemService', function($q, $http, cachedHttpService) {
     return {
         rounds: {
             getCurrentRoundGames: function (seasonId) {
                 var deferred = $q.defer();
                 
-                $http({method: 'GET', url: '/api/picks/season/' + seasonId})
+                /*$http({method: 'GET', url: '/api/picks/season/' + seasonId})
                     .success(function (data) {
                         deferred.resolve(data);
                     })
                     .error(function (data, status) {
                        deferred.reject(status); 
-                    });
-                    
+                    });*/
+                cachedHttpService({method: 'GET', url: '/api/picks/season/' + seasonId})
+                     .success(function (data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function (data, status) {
+                       deferred.reject(status); 
+                    });    
+                
                 return deferred.promise;
             },
             
             getRoundGames: function (apiUrl) {
                 var deferred = $q.defer();
                 
-                $http({method: 'GET', url: apiUrl})
+                /*$http({method: 'GET', url: apiUrl})
+                    .success(function (data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function (data, status) {
+                       deferred.reject(status); 
+                    });*/
+                cachedHttpService({method: 'GET', url: apiUrl})
                     .success(function (data) {
                         deferred.resolve(data);
                     })

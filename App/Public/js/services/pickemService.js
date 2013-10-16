@@ -1,18 +1,11 @@
 'use strict';
 
-pickem.factory('pickemService', function($q, $http, cachedHttpService) {
+pickem.factory('pickemService', function($q, cachedHttpService) {
     return {
         rounds: {
             getCurrentRoundGames: function (seasonId) {
                 var deferred = $q.defer();
-                
-                /*$http({method: 'GET', url: '/api/picks/season/' + seasonId})
-                    .success(function (data) {
-                        deferred.resolve(data);
-                    })
-                    .error(function (data, status) {
-                       deferred.reject(status); 
-                    });*/
+
                 cachedHttpService({method: 'GET', url: '/api/picks/season/' + seasonId})
                      .success(function (data) {
                         deferred.resolve(data);
@@ -26,14 +19,7 @@ pickem.factory('pickemService', function($q, $http, cachedHttpService) {
             
             getRoundGames: function (apiUrl) {
                 var deferred = $q.defer();
-                
-                /*$http({method: 'GET', url: apiUrl})
-                    .success(function (data) {
-                        deferred.resolve(data);
-                    })
-                    .error(function (data, status) {
-                       deferred.reject(status); 
-                    });*/
+
                 cachedHttpService({method: 'GET', url: apiUrl})
                     .success(function (data) {
                         deferred.resolve(data);
@@ -50,9 +36,9 @@ pickem.factory('pickemService', function($q, $http, cachedHttpService) {
             getForSeason: function(seasonId) {
                 var deferred = $q.defer();
                 
-                $http({ 
+                cachedHttpService({ 
                     method: 'GET', 
-                    url: '/api/leaderboard/season/' + seasonId })
+                    url: '/api/leaderboard/season/' + seasonId }, 5)
                 .success(function(data) {
                     deferred.resolve(data);
                 })
@@ -64,7 +50,7 @@ pickem.factory('pickemService', function($q, $http, cachedHttpService) {
             },
             
             updateShowInLeaderboardSetting: function(value) {        
-                $http({
+                cachedHttpService({
                     method: 'POST',
                     url: '/api/user/showInLeaderboard',
                     data: { 'showInLeaderboard': value }
@@ -83,7 +69,7 @@ pickem.factory('pickemService', function($q, $http, cachedHttpService) {
             savePick: function(id, pick) {
                 var deferred = $q.defer();
                 
-                $http({
+                cachedHttpService({
                     method: 'POST',
                     url: '/api/picks',
                     data: { 
@@ -105,7 +91,7 @@ pickem.factory('pickemService', function($q, $http, cachedHttpService) {
         login: function(data) {
             var deferred = $q.defer();
             
-            $http({
+            cachedHttpService({
                 method: 'POST',
                 url: '/api/login',
                 data: data

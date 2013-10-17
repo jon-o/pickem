@@ -34,7 +34,7 @@ pickem.factory('cachedHttpService', function($cacheFactory, $http, $timeout) {
             })
             .success(function (data) {
                 if (isCacheable(request)) {
-                    var expiration = new Date().getTime() + (1 * 60 * 1000);
+                    var expiration = new Date().getTime() + (300 * 60 * 1000);
                     if (arguments.length == 2) {
                         expiration = new Date().getTime() + (duration * 60 * 1000);
                     }

@@ -1,8 +1,4 @@
 'use strict';
-Date.prototype.addMinutes = function(minutes) {
-    this.setTime(this.getTime() + (minutes * 60 * 1000));
-    return this;
-};
 
 pickem.factory('cachedHttpService', function($cacheFactory, $http, $timeout) {
     var cache = $cacheFactory('pickem_http_cache');
@@ -11,7 +7,7 @@ pickem.factory('cachedHttpService', function($cacheFactory, $http, $timeout) {
         var isCached = (cache.get(key) != null);
         
         if (isCached) {
-            isCached = (cache.get(key).expiration > new Date());
+            isCached = (cache.get(key).expiration > new Date().getTime());
         }
         
         return isCached;
@@ -38,9 +34,9 @@ pickem.factory('cachedHttpService', function($cacheFactory, $http, $timeout) {
             })
             .success(function (data) {
                 if (isCacheable(request)) {
-                    var expiration = new Date().addMinutes(300);
+                    var expiration = new Date().getTime() + (1 * 60 * 1000);
                     if (arguments.length == 2) {
-                        expiration = new Date().addMinutes(duration);
+                        expiration = new Date().getTime() + (duration * 60 * 1000);
                     }
                     
                     cache.put(request.url, {

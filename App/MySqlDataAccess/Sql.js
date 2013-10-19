@@ -45,6 +45,14 @@ exports.firstLastRounds = util.format('%s %s %s',
 'FROM rounds',
 'WHERE SeasonId = ?');
 
+exports.getCurrentRound = util.format('',
+'SELECT id',
+'FROM rounds',
+'WHERE roundstartdate <= CURDATE()',
+'   AND seasonid = ?',
+'ORDER BY roundstartdate DESC',
+'LIMIT 1');
+
 exports.getGame = util.format('',
 'SELECT id, dateandtime, hometeamid, awayteamid, result, roundid, score',
 'FROM games',

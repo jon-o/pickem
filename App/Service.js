@@ -138,7 +138,7 @@ exports.savePick = function(criteria) {
         criteria.uid, criteria.gameId, criteria.pick));
     
     var eventEmitter = new EventEmitter();
-    
+    console.log(sql.getGame);
     var gameQuery = db.executeQuery(sql.getGame, [criteria.gameId]);
 
     gameQuery.on('error', function(err) {        
@@ -211,7 +211,7 @@ exports.getLeaderboardForSeason = function(criteria) {
     return eventEmitter;
 };
 
-exports.saveUser = function(criteria) {
+exports.login = function(criteria) {
     console.log(util.format(
         'SaveUser: UID: %s; FacebookId: %s; FacebookUsername: %s; Name: %s', 
         criteria.uid, criteria.facebookId, criteria.facebookUsername, criteria.name));
@@ -222,12 +222,19 @@ exports.saveUser = function(criteria) {
         { 
             query: sql.saveUserUpdate, 
             params: [criteria.facebookUsername, criteria.name, criteria.uid], 
-            name: 'saveUserUpdate' },
+            name: 'saveUserUpdate' 
+        },
         { 
             query: sql.saveUserInsert, 
             params: [criteria.uid, criteria.facebookUsername, criteria.facebookId, criteria.name, 
                 criteria.uid], 
-            name: 'saveUserInsert' }
+            name: 'saveUserInsert' 
+        },
+        {
+            query: sql.getCurrentRound,
+            params: [criteria.seasonId],
+            name: 'currentRound'
+        }
     ]);
 
     query.on('error', function(err) {        

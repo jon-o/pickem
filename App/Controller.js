@@ -12,11 +12,12 @@ exports.login = function (req, res) {
             uid: req.body.third_party_id,
             facebookId: req.body.id,
             facebookUsername: req.body.username,
-            name: req.body.name
+            name: req.body.name,
+            seasonId: 1
         };
         console.log(criteria);
         
-        var task = service.saveUser(criteria);
+        var task = service.login(criteria);
         
         task.on('error', function(err) {
             handleError(err, res);
@@ -24,8 +25,12 @@ exports.login = function (req, res) {
         
         task.on('end', function(result) {
             req.session.uid = criteria.uid;
+            console.log('current round id: ' + result.currentRound[0].id);
             
-            res.send(201);
+            //res.send(201);
+            res.format({
+                json: function() { res.send({ currentRoundId: result.currentRound[0].id }); }
+            });
         });
     }
 };

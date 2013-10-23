@@ -27,7 +27,6 @@ exports.login = function (req, res) {
             req.session.uid = criteria.uid;
             console.log('current round id: ' + result.currentRound[0].id);
             
-            //res.send(201);
             res.format({
                 json: function() { res.send({ currentRoundId: result.currentRound[0].id }); }
             });

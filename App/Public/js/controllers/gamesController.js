@@ -1,15 +1,21 @@
 'use strict';
 
 pickem.controller('GamesController', 
-    function GamesController($scope, pickemService, sharedService) {
+    function GamesController($scope, pickemService, sharedService, $location, $rootScope) {
         var previousRoundUri;
         var nextRoundUri;          
         
-        $scope.selectedRound = pickemService.rounds.getCurrentRoundGames(1);             
-        
-        $scope.selectedRound.then(function(response) {
-            processRoundResponse(response);
-        });
+        var initialize = function () {
+            if (!$rootScope.login) {
+                $location.path('/login');
+            } else {
+                $scope.selectedRound = pickemService.rounds.getCurrentRoundGames(1);             
+            
+                $scope.selectedRound.then(function(response) {
+                    processRoundResponse(response);
+                });
+            }
+        };
         
         $scope.nextRound = function () {            
             performGetRoundGames(nextRoundUri);
@@ -80,5 +86,7 @@ pickem.controller('GamesController',
             sharedService.notifier.unsuccessfulNotification(
                 game.name + ' - Please try again', 'Pick not saved: ' + game.getPickName());
         };
+        
+        initialize();
     }
 );

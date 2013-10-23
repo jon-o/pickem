@@ -22,7 +22,11 @@ pickem.controller('LoginController',
                     //Sign into our api and send user data from FB
                     pickemService.login(fbResponse)
                         .then(function(apiResponse) {
-                            $rootScope.isLoggedIn = true;
+                            $rootScope.login = {
+                                success: true,
+                                currentRoundId: apiResponse.currentRoundId
+                            };
+
                             $location.path('/games');
                         }, function(apiResponse) {
                             //Something went wrong with the login to our API
@@ -45,6 +49,11 @@ pickem.controller('LoginController',
             $scope.loginEnabled = true;
         };
         
-        authenticate();
+        //authenticate();
+        $rootScope.login = {
+            success: true,
+            currentRoundId: 6
+        };
+        $location.path('/games');
     }
 );

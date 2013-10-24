@@ -2,8 +2,8 @@
 
 pickem.factory('pickemService', function($q, cachedHttpService) {
     return {
-        rounds: {
-            getCurrentRoundGames: function (seasonId) {
+        round: {
+            /*getCurrentRoundGames: function (seasonId) {
                 var deferred = $q.defer();
 
                 cachedHttpService({method: 'GET', url: '/api/picks/season/' + seasonId})
@@ -15,7 +15,7 @@ pickem.factory('pickemService', function($q, cachedHttpService) {
                     });    
                 
                 return deferred.promise;
-            },
+            },*/
             
             getRoundGames: function (apiUrl) {
                 var deferred = $q.defer();

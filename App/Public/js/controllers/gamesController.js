@@ -9,7 +9,8 @@ pickem.controller('GamesController',
             if (!$rootScope.login) {
                 $location.path('/login');
             } else {
-                $scope.selectedRound = pickemService.rounds.getCurrentRoundGames(1);             
+                var uri = $rootScope.login.currentRound.uri;
+                $scope.selectedRound = pickemService.round.getRoundGames(uri);             
             
                 $scope.selectedRound.then(function(response) {
                     processRoundResponse(response);
@@ -42,7 +43,7 @@ pickem.controller('GamesController',
         
         var performGetRoundGames = function (getRoundGamesUri) {
             if (getRoundGamesUri !== null) {
-                $scope.selectedRound = pickemService.rounds.getRoundGames(getRoundGamesUri);
+                $scope.selectedRound = pickemService.round.getRoundGames(getRoundGamesUri);
                 
                 $scope.selectedRound.then(function(response) {
                     processRoundResponse(response);

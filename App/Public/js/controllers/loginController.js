@@ -24,7 +24,7 @@ pickem.controller('LoginController',
                         .then(function(apiResponse) {
                             $rootScope.login = {
                                 success: true,
-                                currentRoundId: apiResponse.currentRoundId
+                                currentRound: apiResponse.currentRound
                             };
 
                             $location.path('/games');
@@ -52,7 +52,10 @@ pickem.controller('LoginController',
         //authenticate();
         $rootScope.login = {
             success: true,
-            currentRoundId: 6
+            currentRound: {
+                id: 6,
+                uri: '/api/picks/season/1/round/6'
+            }
         };
         $location.path('/games');
     }

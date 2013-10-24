@@ -2,22 +2,8 @@
 
 pickem.factory('pickemService', function($q, cachedHttpService) {
     return {
-        round: {
-            /*getCurrentRoundGames: function (seasonId) {
-                var deferred = $q.defer();
-
-                cachedHttpService({method: 'GET', url: '/api/picks/season/' + seasonId})
-                     .success(function (data) {
-                        deferred.resolve(data);
-                    })
-                    .error(function (data, status) {
-                       deferred.reject(status); 
-                    });    
-                
-                return deferred.promise;
-            },*/
-            
-            getRoundGames: function (apiUrl) {
+        games: {
+            getByUri: function (apiUrl) {
                 var deferred = $q.defer();
 
                 cachedHttpService({method: 'GET', url: apiUrl})
@@ -66,7 +52,7 @@ pickem.factory('pickemService', function($q, cachedHttpService) {
         },
         
         pick : {
-            savePick: function(id, pick) {
+            save: function(id, pick) {
                 var deferred = $q.defer();
                 
                 cachedHttpService({

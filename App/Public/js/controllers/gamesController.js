@@ -10,7 +10,7 @@ pickem.controller('GamesController',
                 $location.path('/login');
             } else {
                 var uri = $rootScope.login.currentRound.uri;
-                $scope.selectedRound = pickemService.round.getRoundGames(uri);             
+                $scope.selectedRound = pickemService.games.getByUri(uri);             
             
                 $scope.selectedRound.then(function(response) {
                     processRoundResponse(response);
@@ -31,7 +31,7 @@ pickem.controller('GamesController',
                 var previousPick = game.pick;
                 game.pick = pick;
                 
-                pickemService.pick.savePick(game.id, pick)
+                pickemService.pick.save(game.id, pick)
                     .then(function() {                        
                         displaySuccessPickNotification(game);                        
                 }, function() {                    
@@ -41,9 +41,9 @@ pickem.controller('GamesController',
             }            
         };            
         
-        var performGetRoundGames = function (getRoundGamesUri) {
-            if (getRoundGamesUri !== null) {
-                $scope.selectedRound = pickemService.round.getRoundGames(getRoundGamesUri);
+        var performGetRoundGames = function (uri) {
+            if (uri !== null) {
+                $scope.selectedRound = pickemService.games.getByUri(uri);
                 
                 $scope.selectedRound.then(function(response) {
                     processRoundResponse(response);

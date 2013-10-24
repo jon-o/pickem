@@ -1,12 +1,20 @@
 'use strict';
 
-pickem.factory('pickemService', function($q, cachedHttpService) {
+pickem.factory('pickemService', function($q, cachedHttpService, $rootScope) {
+    var isCurrentRound = function(apiUrl) {
+        return ($rootScope.login.currentRound.uri == apiUrl);
+    };
+    
     return {
         games: {
             getByUri: function (apiUrl) {
                 var deferred = $q.defer();
+                var cacheDuration = 300;
+                if (isCurrentRound(apiUrl)) {
+                    cacheDuration = 5;
+                }
 
-                cachedHttpService({method: 'GET', url: apiUrl})
+                cachedHttpService({method: 'GET', url: apiUrl}, cacheDuration)
                     .success(function (data) {
                         deferred.resolve(data);
                     })
@@ -21,10 +29,11 @@ pickem.factory('pickemService', function($q, cachedHttpService) {
         leaderboard: {
             getForSeason: function(seasonId) {
                 var deferred = $q.defer();
+                var cacheDuration = 5;
                 
                 cachedHttpService({ 
                     method: 'GET', 
-                    url: '/api/leaderboard/season/' + seasonId }, 5)
+                    url: '/api/leaderboard/season/' + seasonId }, cacheDuration)
                 .success(function(data) {
                     deferred.resolve(data);
                 })

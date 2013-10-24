@@ -33,11 +33,8 @@ pickem.factory('cachedHttpService', function($cacheFactory, $http, $timeout) {
                 data: request.data 
             })
             .success(function (data) {
-                if (isCacheable(request)) {
-                    var expiration = new Date().getTime() + (300 * 60 * 1000);
-                    if (arguments.length == 2) {
-                        expiration = new Date().getTime() + (duration * 60 * 1000);
-                    }
+                if (isCacheable(request) && duration != null) {
+                    var expiration = new Date().getTime() + (duration * 60 * 1000);
                     
                     cache.put(request.url, {
                         data: data,

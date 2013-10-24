@@ -28,7 +28,14 @@ exports.login = function (req, res) {
             console.log('current round id: ' + result.currentRound[0].id);
             
             res.format({
-                json: function() { res.send({ currentRoundId: result.currentRound[0].id }); }
+                json: function() { 
+                    res.send({
+                        currentRound: {
+                            id: result.currentRound[0].id,
+                            uri: result.currentRound[0].uri 
+                        }
+                    });
+                }
             });
         });
     }

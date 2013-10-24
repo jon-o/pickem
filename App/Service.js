@@ -242,6 +242,8 @@ exports.login = function(criteria) {
     });
     
     query.on('end', function(result) {
+        result.currentRound[0].uri = buildPicksNavigationUri(criteria.seasonId, 
+            result.currentRound[0].id);
         eventEmitter.emit('end', result);        
     });
     

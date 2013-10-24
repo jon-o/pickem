@@ -64,7 +64,6 @@ app.get('/', function(req, res) {
 //*** API ***
 app.post('/api/login', controller.login);
 app.get('/api/picks/season/:seasonId/round/:round', apiAuth, controller.findPicksForRound);
-app.get('/api/picks/season/:seasonId', apiAuth, controller.findPicksForCurrentRound);
 app.post('/api/picks', apiAuth, controller.savePick);
 app.get('/api/leaderboard/season/:seasonId', apiAuth, controller.getLeaderboardForSeason);
 app.post('/api/user/showInLeaderboard', apiAuth, controller.updateShowInLeaderboardSetting);

@@ -73,31 +73,6 @@ exports.findPicksForRound = function (req, res) {
     });
 };
 
-exports.findPicksForCurrentRound = function (req, res) {
-    var validationResponse = validateNumeric([req.params.seasonId]);
-    if (validationResponse.valid === false) {                
-        return res.format({ 
-            json: function() { res.send(validationResponse)}            
-        });
-    }  
-    
-    var task = service.retrivePicksForCurrentRound(req.params.seasonId, getUid(req));
-    
-    task.on('error', function(err) {
-        handleError(err, res);        
-    });
-    
-    task.on('end', function(result) {
-        if (result) {
-            res.format({            
-                json: function() { res.send(result); }            
-            });
-        } else {
-            res.send(404, { error: 'Not found' });
-        }    
-    });
-};
-
 exports.savePick = function(req, res) {
     var criteria = {
         gameId: req.body.id,

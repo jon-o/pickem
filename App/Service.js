@@ -138,7 +138,6 @@ exports.savePick = function(criteria) {
         criteria.uid, criteria.gameId, criteria.pick));
     
     var eventEmitter = new EventEmitter();
-    console.log(sql.getGame);
     var gameQuery = db.executeQuery(sql.getGame, [criteria.gameId]);
 
     gameQuery.on('error', function(err) {        

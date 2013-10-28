@@ -1,10 +1,10 @@
-6	28/09/2013 07:00	Aston Villa	VS	Manchester City
-6	28/09/2013 07:00	Everton	VS	Newcastle
-6	28/09/2013 07:00	Fulham	VS	Cardiff City
-6	28/09/2013 07:00	Hull City	VS	West Ham United
-6	28/09/2013 07:00	Manchester United	VS	West Bromwich(WBA)
-6	28/09/2013 07:00	Southampton	VS	Crystal Palace
-6	28/09/2013 07:00	Stoke City	VS	Norwich City
-6	28/09/2013 07:00	Sunderland	VS	Liverpool
-6	28/09/2013 07:00	Swansea City	VS	Arsenal
-6	28/09/2013 07:00	Tottenham Hotspur	VS	Chelsea FC
+10	2/11/2013 5:45	Newcastle	Chelsea FC
+10	2/11/2013 8:00	Fulham	Manchester United
+10	2/11/2013 8:00	Hull City	Sunderland
+10	2/11/2013 8:00	Manchester City	Norwich City
+10	2/11/2013 8:00	Stoke City	Southampton
+10	2/11/2013 8:00	West Bromwich(WBA)	Crystal Palace
+10	2/11/2013 8:00	West Ham United	Aston Villa
+10	2/11/2013 10:30	Arsenal	Liverpool
+10	3/11/2013 6:30	Everton	Tottenham Hotspur
+10	3/11/2013 8:59	Cardiff City	Swansea City

@@ -38,7 +38,7 @@ connection.query('SELECT Id AS id, Name as name FROM teams', function (err, rows
             
             var date = Date.parse(fields[1] + sourceTimeZone);
             var homeTeam = getTeam(teams, fields[2]);
-            var awayTeam = getTeam(teams, fields[4])
+            var awayTeam = getTeam(teams, fields[3]);
             
             var insertValues = util.format("('%s', %d, %d, NULL, %d, NULL)", 
                 date.toISOString(), homeTeam.id, awayTeam.id, roundId);
@@ -62,7 +62,8 @@ connection.query('SELECT Id AS id, Name as name FROM teams', function (err, rows
                                 console.log(rows);
                             }
                             connection.destroy();
-                    });
+                        }
+                    );
                 }
            });
         });

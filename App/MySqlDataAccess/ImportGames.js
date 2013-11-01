@@ -36,7 +36,8 @@ connection.query('SELECT Id AS id, Name as name FROM teams', function (err, rows
         stream.on('data', function(line) {
             var fields = line.toString().split('\t');
             
-            var date = Date.parse(fields[1] + sourceTimeZone);
+            //var date = Date.parse(fields[1] + sourceTimeZone);
+            var date = parseDate(fields[1], sourceTimeZone);
             var homeTeam = getTeam(teams, fields[2]);
             var awayTeam = getTeam(teams, fields[3]);
             
@@ -69,6 +70,22 @@ connection.query('SELECT Id AS id, Name as name FROM teams', function (err, rows
         });
     }
 });
+
+var parseDate = function(source, timezone) {
+    var slashSplit = source.split('/');
+    var spaceSplit = slashSplit[2].split(' ');
+    
+    var day = slashSplit[0];
+    var month = slashSplit[1];
+    var year = spaceSplit[0];
+    var time = spaceSplit[1];
+    
+    var dateString = util.format("%d-%d-%d %s %s",
+        year, month, day, time, timezone);
+    var date = Date.parse(dateString);
+    
+    return date;
+};
 
 var getTeam = function(teams, name) {
     var team = _.find(teams, function(team) {

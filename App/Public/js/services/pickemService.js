@@ -14,13 +14,16 @@ pickem.factory('pickemService', function($q, cachedHttpService, $rootScope) {
                     cacheDuration = 5;
                 }
 
-                cachedHttpService({method: 'GET', url: apiUrl}, cacheDuration)
-                    .success(function (data) {
-                        deferred.resolve(data);
-                    })
-                    .error(function (data, status) {
-                       deferred.reject(status); 
-                    });
+                cachedHttpService({
+                    method: 'GET', 
+                    url: apiUrl }, 
+                    { duration: cacheDuration })
+                .success(function (data) {
+                    deferred.resolve(data);
+                })
+                .error(function (data, status) {
+                   deferred.reject(status); 
+                });
                     
                 return deferred.promise;
             }
@@ -33,7 +36,8 @@ pickem.factory('pickemService', function($q, cachedHttpService, $rootScope) {
                 
                 cachedHttpService({ 
                     method: 'GET', 
-                    url: '/api/leaderboard/season/' + seasonId }, cacheDuration)
+                    url: '/api/leaderboard/season/' + seasonId }, 
+                    { duration: cacheDuration })
                 .success(function(data) {
                     deferred.resolve(data);
                 })
@@ -71,6 +75,8 @@ pickem.factory('pickemService', function($q, cachedHttpService, $rootScope) {
                         'id': id,
                         'pick': pick
                     }
+                }, {
+                    expireEntry: $rootScope.login.currentRound.uri
                 })
                 .success(function(status) {
                     deferred.resolve(status);

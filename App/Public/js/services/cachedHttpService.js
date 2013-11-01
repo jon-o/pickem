@@ -17,7 +17,9 @@ pickem.factory('cachedHttpService', function($cacheFactory, $http, $timeout) {
         return request.method == 'GET';
     };
     
-    return function(request, duration) {
+    return function(request, options) {
+        options = options || {};
+        
         var successCallback,
             errorCallback;
         
@@ -33,14 +35,19 @@ pickem.factory('cachedHttpService', function($cacheFactory, $http, $timeout) {
                 data: request.data 
             })
             .success(function (data) {
-                if (isCacheable(request) && duration != null) {
-                    var expiration = new Date().getTime() + (duration * 60 * 1000);
+                if (isCacheable(request) && options.duration != null) {
+                    var expiration = new Date().getTime() + (options.duration * 60 * 1000);
                     
                     cache.put(request.url, {
                         data: data,
                         expiration: expiration 
                     });
                 }
+                
+                if (options.expireEntry != null) {
+                    cache.remove(options.expireEntry);
+                }
+                
                 successCallback(data);
             })
             .error(function (data, status) {

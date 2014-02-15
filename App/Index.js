@@ -1,11 +1,3 @@
-//Setup for Nodetime add-on
-if (process.env.NODETIME_ACCOUNT_KEY) {
-    require('nodetime').profile({
-        accountKey: process.env.NODETIME_ACCOUNT_KEY,
-        appName: 'Pickem' // optional
-    });
-}
-
 var express = require("express");
 var path = require("path");
 var config = require('./Config.js');

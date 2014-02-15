@@ -58,6 +58,7 @@
     <Compile Include="App\Public\lib\angularStrap\angular-strap.js" />
     <Compile Include="App\Public\lib\angularStrap\angular-strap.min.js" />
     <Content Include="deploy.sh" />
+    <Content Include="iisnode.yml" />
     <Content Include="package.json" />
     <Content Include="Procfile" />
     <Content Include="README.md" />

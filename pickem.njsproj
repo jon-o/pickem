@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4253ee40-ea1c-48b2-b060-23b712898faa}</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <ProjectView>ProjectFiles</ProjectView>
+    <StartupFile>app\Index.js</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Compile Include="App\AdminController.js" />
+    <Compile Include="App\AdminService.js" />
+    <Compile Include="App\Config.js" />
+    <Compile Include="App\Controller.js" />
+    <Compile Include="App\Index.js" />
+    <Compile Include="App\Service.js" />
+    <Compile Include="App\DataAccess\Database.js" />
+    <Compile Include="App\DataAccess\DatabaseTest.js" />
+    <Compile Include="App\DataAccess\Seed.js" />
+    <Compile Include="App\DataAccess\Sql.js" />
+    <Content Include="App\MySqlDataAccess\Games.txt" />
+    <Compile Include="App\MySqlDataAccess\Database.js" />
+    <Compile Include="App\MySqlDataAccess\DatabaseTest.js" />
+    <Compile Include="App\MySqlDataAccess\ImportGames.js" />
+    <Compile Include="App\MySqlDataAccess\Seed.js" />
+    <Compile Include="App\MySqlDataAccess\Sql.js" />
+    <Content Include="App\Public\channel.html" />
+    <Content Include="App\Public\index.html" />
+    <Content Include="App\Views\error.jade" />
+    <Content Include="App\Views\games.jade" />
+    <Content Include="App\Views\layout.jade" />
+    <Content Include="App\Views\notFound.jade" />
+    <Content Include="App\Views\rounds.jade" />
+    <Content Include="App\Views\seasons.jade" />
+    <Content Include="App\Public\css\pickem.css" />
+    <Compile Include="App\Public\js\app.js" />
+    <Compile Include="App\Public\js\filters.js" />
+    <Content Include="App\Public\partials\games-partial.html" />
+    <Content Include="App\Public\partials\leaderboard-partial.html" />
+    <Content Include="App\Public\partials\login-partial.html" />
+    <Compile Include="App\Public\js\controllers\gamesController.js" />
+    <Compile Include="App\Public\js\controllers\leaderboardController.js" />
+    <Compile Include="App\Public\js\controllers\loginController.js" />
+    <Compile Include="App\Public\js\services\cachedHttpService.js" />
+    <Compile Include="App\Public\js\services\facebookService.js" />
+    <Compile Include="App\Public\js\services\pickemService.js" />
+    <Compile Include="App\Public\js\services\sharedService.js" />
+    <Compile Include="App\Public\js\viewModels\gameViewModel.js" />
+    <Compile Include="App\Public\lib\angularStrap\angular-strap.js" />
+    <Compile Include="App\Public\lib\angularStrap\angular-strap.min.js" />
+    <Content Include="deploy.sh" />
+    <Content Include="package.json" />
+    <Content Include="Procfile" />
+    <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App\" />
+    <Folder Include="App\DataAccess" />
+    <Folder Include="App\MySqlDataAccess" />
+    <Folder Include="App\Public" />
+    <Folder Include="App\Public\css" />
+    <Folder Include="App\Public\js" />
+    <Folder Include="App\Public\js\controllers" />
+    <Folder Include="App\Public\js\services" />
+    <Folder Include="App\Public\js\viewModels" />
+    <Folder Include="App\Public\lib\" />
+    <Folder Include="App\Public\lib\angularStrap" />
+    <Folder Include="App\Public\partials" />
+    <Folder Include="App\Views" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

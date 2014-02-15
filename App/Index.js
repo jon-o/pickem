@@ -12,6 +12,17 @@ var config = require('./Config.js');
 var controller = require("./Controller.js");
 var adminController = require("./AdminController.js");
 
+if (process.env.LOAD_CONFIG) {
+	config.mysql.host = process.env.MYSQL_HOST;
+	config.mysql.user = process.env.MYSQL_USER;
+	config.mysql.password = process.env.MYSQL_PASSWORD;
+	config.mysql.database = process.env.MYSQL_DATABASE;
+		
+	config.sessionSecret = process.env.SESSION_SECRET;
+	config.adminUser = process.env.ADMIN_USER;
+	config.adminPassword = process.env.ADMIN_PASSWORD;
+}
+
 var app = express();
 
 var notFoundHandler = function(req, res) {

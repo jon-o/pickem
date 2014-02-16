@@ -1,10 +1,6 @@
-var express = require("express");
-var path = require("path");
 var config = require('./Config.js');
-var controller = require("./Controller.js");
-var adminController = require("./AdminController.js");
-
 if (process.env.LOAD_CONFIG) {
+	config.mysql = {};
 	config.mysql.host = process.env.MYSQL_HOST;
 	config.mysql.user = process.env.MYSQL_USER;
 	config.mysql.password = process.env.MYSQL_PASSWORD;
@@ -14,6 +10,11 @@ if (process.env.LOAD_CONFIG) {
 	config.adminUser = process.env.ADMIN_USER;
 	config.adminPassword = process.env.ADMIN_PASSWORD;
 }
+
+var express = require("express");
+var path = require("path");
+var controller = require("./Controller.js");
+var adminController = require("./AdminController.js");
 
 var app = express();
 
